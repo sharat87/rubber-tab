@@ -150,8 +150,8 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
-      <div>
-        Units:
+      <label>
+        <span>Units:</span>
         <span class=radio-bar>
           <label>
             <input type=radio name=tunits value=c ng-model=units><span>Celsius</span>
@@ -163,7 +163,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
             <input type=radio name=tunits value=k ng-model=units><span>Kelvin</span>
           </label>
         </span>
-      </div>
+      </label>
       <label>
         <input type=checkbox ng-model=hideLocation>
         <span>Hide Location</span>
