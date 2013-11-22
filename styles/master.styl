@@ -91,7 +91,7 @@ select
     a
       display inline-block
 
-    > *
+    > span
       padding 0 12px
       width 100%
       display table-cell
@@ -113,6 +113,16 @@ select
     .cancel-btn
       color rgb(255, 150, 150)
       opacity .7
+
+    &[ng-controller='NewsBar'] .expanded
+      display block
+
+      &:before
+        content '∘'
+        opacity .7
+
+      &:last-child
+        margin-bottom 12px
 
   .dull
     color #999

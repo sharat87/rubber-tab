@@ -170,7 +170,8 @@ directives and their controllers, mainly to access `id` and `config` attributes.
     </span>
     <span class=dull ng-hide=items>Loading News...</span>
     <span ng-show=items>
-      <span ng-repeat='item in items' ng-show='expanded || activeItem === item'>
+      <span ng-repeat='item in items' ng-show='expanded || activeItem === item'
+            ng-class='{expanded: expanded}'>
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
