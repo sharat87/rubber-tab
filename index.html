@@ -192,7 +192,8 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
-      <label>Edition: <input type=text placeholder='Leave empty to auto-detect'></label>
+      <label>Edition: <input type=text ng-model=edition></label>
+      <label>Language: <input type=text ng-model=lang></label>
       <!-- <label>Region: <input type=text placeholder='Leave empty to auto-detect'></label> -->
       <label>
         <span>Topic:</span>

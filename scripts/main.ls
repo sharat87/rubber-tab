@@ -199,6 +199,7 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
   store $scope,
     items: null
     edition: null
+    lang: \en
     topic: \w
 
   loadNews = ->
@@ -210,7 +211,7 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
         ned: $scope.edition
         # region: \in
         topic: $scope.topic
-        hl: \en
+        hl: $scope.lang
         output: \rss
       transformResponse: (data) ->
         new DOMParser().parseFromString data, \text/xml
