@@ -28,11 +28,10 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 </div>
 
 <nav>
-  <button tooltip='Reorder/Configure bars' ng-click='editMode = !editMode'
-    ng-class='{active: editMode}'>
-    <i class=i-edit></i></button>
+  <a tooltip='Reorder/Configure bars' ng-click='editMode = !editMode'
+    ng-class='{active: editMode}'><i class=i-edit></i></a>
   <span menu-box>
-    <button tooltip='Add new bar'><i class=i-add></i></button>
+    <a tooltip='Add new bar'><i class=i-add></i></a>
     <ul class='menu ne'>
       <li class=header>Add bar of type</li>
       <li ng-repeat='(name, bar) in registry'>
@@ -42,9 +41,9 @@ directives and their controllers, mainly to access `id` and `config` attributes.
     </ul>
   </span>
   <section class=right>
-    <button ng-hide=nav.onLine><i class=i-flash></i></button>
+    <a ng-hide=nav.onLine><i class=i-flash></i></a>
     <span menu-box>
-      <button><i class=i-chrome></i></button>
+      <a><i class=i-chrome></i></a>
       <ul class='menu nw'>
         <li class=header>Chrome pages</li>
         <li><a href=chrome-internal://newtab><i class=i-doc></i> New tab</a></li>
@@ -56,7 +55,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       </ul>
     </span>
     <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
-    <button ng-click='showOptions = true'><i class=i-options></i></button>
+    <a ng-click='showOptions = true'><i class=i-options></i></a>
   </section>
 </nav>
 

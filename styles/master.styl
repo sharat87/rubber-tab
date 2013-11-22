@@ -268,7 +268,7 @@ select
     //   display none
 
 nav
-  background linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3))
+  background linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .6))
   position fixed
   bottom 0
   height 37px
@@ -277,21 +277,19 @@ nav
   .right
     float right
 
-  a, button
-    border none
+  a
     padding 6px 18px
     text-decoration none
     opacity .4
+    display inline-block
 
-    &:hover, &:focus
+    &:hover, &:focus, &.active
       outline none
-      background linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4))
+      background linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .8))
       opacity 1
 
     &.active
-      background linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .7))
       color #09F
-      opacity 1
 
 .radio-bar
   display inline-block
