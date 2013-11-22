@@ -136,15 +136,22 @@ select
     padding 6px 12px
     border-radius 0 0 3px 3px
     box-shadow 0 6px 24px rgba(0, 0, 0, .7)
-    min-width 500px
     min-height 120px
     top 100%
     right 0
+    font-size .8em
     z-index 100
 
     > *
       display block
       margin-bottom 12px
+
+    label span
+      width 140px
+      display inline-block
+
+      + *
+        width 280px
 
   a:hover > i:before
     background-color rgba(0, 0, 0, .5)
