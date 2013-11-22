@@ -41,7 +41,7 @@ select
   vertical-align middle
   font inherit
 
-#options
+.pop-slide
   position absolute
   height 100%
   top 0
@@ -54,13 +54,16 @@ select
   label
     display block
 
+  a
+    text-decoration underline
+
   .close-btn
     display block
     border thin solid #FFF
     border-radius 3px
     padding 6px
     width 100%
-    margin 24px 0 0
+    margin 48px 0 24px
     box-shadow 0 0 6px #FFF
 
     &:hover, &:focus
@@ -339,18 +342,18 @@ nav
   max-height 50px
   opacity 1
 
-#options.ng-hide-add,
-#options.ng-hide-remove
+.pop-slide.ng-hide-add,
+.pop-slide.ng-hide-remove
   transition .1s ease-out all
   display block !important
   -webkit-transform-origin right
 
-#options.ng-hide-remove,
-#options.ng-hide-add.ng-hide-add-active
+.pop-slide.ng-hide-remove,
+.pop-slide.ng-hide-add.ng-hide-add-active
   -webkit-transform scaleX(0)
 
-#options.ng-hide-add,
-#options.ng-hide-remove.ng-hide-remove-active
+.pop-slide.ng-hide-add,
+.pop-slide.ng-hide-remove.ng-hide-remove-active
   -webkit-transform scaleX(1)
 
 .v-scale-slide.ng-hide-add,

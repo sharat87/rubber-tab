@@ -55,14 +55,23 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       </ul>
     </span>
     <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
-    <a><i class=i-help></i></a>
-    <a ng-click='showOptions = true'><i class=i-options></i></a>
+    <a ng-click='showHelp = true'><i class=i-help></i></a>
+    <!-- <a ng-click='showOptions = true'><i class=i-options></i></a> -->
   </section>
 </nav>
 
-<div id=options ng-show=showOptions>
+<div class=pop-slide ng-show=showOptions>
   Nothing here yet, again.
   <button class=close-btn ng-click='showOptions = false'>Close</button>
+</div>
+
+<div class=pop-slide ng-show=showHelp>
+  <h1>Rubber tab!</h1>
+  <p>Hello there! Thank you for trying out Rubber tab.</p>
+  <p>Rubber tab is open source, released with the
+    <a href='http://mitl.sharats.me'>MIT license</a>. You can find the source
+    code on the github project.</p>
+  <button class=close-btn ng-click='showHelp = false'>Close</button>
 </div>
 
 <!-- Bar ideas
