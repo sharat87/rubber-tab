@@ -1,7 +1,7 @@
 {
-    "name": "Silly Start Page",
+    "name": "Rubber tab",
     "version": "0.1",
-    "description": "A silly simple start page inspired by 'Knew Tab' and 'Humble New Tab Page'",
+    "description": "A rubbery simple start page inspired by *Knew Tab* and *Humble New Tab Page*",
     // "icons": {"128": "icons/icon-128.png"},
     "homepage_url": "http://sharats.me",
     "chrome_url_overrides": {"newtab": "index.html"},
