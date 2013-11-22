@@ -89,6 +89,24 @@ select
     line-height 52px
     margin-right 6px
 
+  > table
+    border-spacing 0
+    width 100%
+
+    td
+      vertical-align middle
+      padding 0 12px
+      width 100%
+
+      &:first-child, &:last-child
+        padding 0
+        width auto
+
+        i:before
+          background-color rgba(0, 0, 0, .2)
+          width 52px
+          line-height 52px
+
   .right
     float right
 

@@ -74,16 +74,21 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 -->
 
 <script type=text/ng-template id=bars/datetime.html>
-  <div ng-controller=TimeBar>
-    <a href=http://everytimezone.com><i class='i-clock bullet-icon'></i></a>
-    <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
-    <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span>
-    &mdash;
-    {{weekday}}, <b>{{date}}</b><sup>{{dateSuffix}}</sup> {{month}} {{year}}
-    <span class=right>
-      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
-    </span>
-  </div>
+  <table ng-controller=TimeBar>
+    <tr>
+      <td>
+        <a href='http://everytimezone.com'><i class=i-clock></i></a>
+      </td>
+      <td>
+        <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
+        <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span> &mdash;
+        {{weekday}}, <b>{{date}}</b><sup>{{dateSuffix}}</sup> {{month}} {{year}}
+      </td>
+      <td>
+        <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+      </td>
+    </tr>
+  </table>
 </script>
 
 <script type=text/ng-template id=bars/gmail.html>
@@ -156,7 +161,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 
 <script type=text/ng-template id=bars/news.html>
   <div ng-controller=NewsBar>
-    <i class='i-news bullet-icon'></i>
+    <span class=left><i class='i-news bullet-icon'></i></span>
     <span class=dull ng-hide=items>Loading News...</span>
     <span ng-show=items>
       <span ng-repeat='item in items' ng-show='expanded || activeItem === item'>
