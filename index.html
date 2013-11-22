@@ -1,0 +1,206 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>New Tab</title>
+<link rel=stylesheet href=styles/master.css>
+<link rel=stylesheet href=vendor/fontello.css>
+<script src=vendor/angular.js></script>
+<script src=vendor/angular-animate.js></script>
+<script src=scripts/main.js></script>
+
+<body ng-csp ng-app=app ng-controller=AppCtrl>
+
+<!-- This bar variable, declared in `ng-repeat` is used by the template
+directives and their controllers, mainly to access `id` and `config` attributes. -->
+<div ng-repeat='barName in bars track by $index' ng-include='"bars/" + barName + ".html"'
+  class='bar bar-item-animate' name='{{barName}}'></div>
+
+<div id=apps ng-controller=AppsListCtrl>
+  <span class=app-item ng-repeat='app in apps | orderBy:"name"'
+    menu-box=contextmenu>
+    <a class=app-ln href='{{app.appLaunchUrl}}' tooltip='{{app.name}}'>
+      <img ng-src='{{app.largestIcon.url}}' width=32 height=32></a>
+    <ul class='menu se'>
+      <li><a href='{{app.appLaunchUrl}}'><b>{{app.name}}</b></a>
+      <li><a href='{{app.homepageUrl}}'><i class=i-link-ext></i> View in Web Store</a>
+      <li><a tabindex=0 ng-click='uninstall(app)'><i class=i-cancel></i> Uninstall app</a>
+    </ul>
+  </span>
+</div>
+
+<nav>
+  <button tooltip='Reorder/Configure bars' ng-click='editMode = !editMode'
+    ng-class='{active: editMode}'>
+    <i class=i-edit></i></button>
+  <span menu-box>
+    <button tooltip='Add new bar'><i class=i-add></i></button>
+    <ul class='menu ne'>
+      <li class=header>Add bar of type</li>
+      <li ng-repeat='(name, bar) in registry'>
+        <a tabindex=0 ng-click='addNewBar(name)'>
+          <i class='i-{{bar.icon}}'></i> {{bar.title}}</a>
+      </li>
+    </ul>
+  </span>
+  <section class=right>
+    <button ng-hide=nav.onLine><i class=i-flash></i></button>
+    <span menu-box>
+      <button><i class=i-chrome></i></button>
+      <ul class='menu nw'>
+        <li class=header>Chrome pages</li>
+        <li><a href=chrome-internal://newtab><i class=i-doc></i> New tab</a></li>
+        <li><a href=chrome://history><i class=i-history></i> History</a></li>
+        <li><a href=chrome://bookmarks><i class=i-star></i> Bookmarks</a></li>
+        <li><a href=chrome://plugins><i class=i-extension></i> Plugins</a></li>
+        <li><a href=chrome://extensions><i class=i-extension></i> Extensions</a></li>
+        <li><a href=chrome://settings><i class=i-settings></i> Settings</a></li>
+      </ul>
+    </span>
+    <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
+    <button ng-click='showOptions = true'><i class=i-options></i></button>
+  </section>
+</nav>
+
+<div id=options ng-show=showOptions>
+  Nothing here yet, again.
+  <button class=close-btn ng-click='showOptions = false'>Close</button>
+</div>
+
+<!-- Bar ideas
+  - Github notifications.
+  - Random country, its capital, language and largest city.
+  - Random word of the day and its definition.
+  - Posts from a user-specified subreddit.
+  - An RSS ticker.
+-->
+
+<script type=text/ng-template id=bars/datetime.html>
+  <div ng-controller=TimeBar>
+    <a href=http://everytimezone.com><i class='i-clock bullet-icon'></i></a>
+    <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
+    <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span>
+    &mdash;
+    {{weekday}}, <b>{{date}}</b><sup>{{dateSuffix}}</sup> {{month}} {{year}}
+    <span class=right>
+      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    </span>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/gmail.html>
+  <div ng-controller=GMailBar>
+    <a href=https://gmail.com><i class='i-mail bullet-icon'></i></a>
+      <span class=dull ng-show='unreads == null'>Loading GMail...</span>
+    <span ng-show='unreads != null'>{{unreads}} unread mails</span>
+    <span class=right>
+      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    </span>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/facebook.html>
+  <div ng-controller=FacebookBar>
+    <a href=https://facebook.com><i class='i-facebook bullet-icon'></i></a>
+    <span class=dull ng-show='inbox == null'>Loading Facebook...</span>
+    <span ng-show='inbox != null'>
+      {{notifications.num_unread}} notifications and
+      {{inbox.unread}} unread messages
+    </span>
+    <span class=right>
+      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    </span>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/weather.html>
+  <div ng-controller=WeatherBar>
+    <a href='https://google.co.in/search?q=weather'><i class='i-weather bullet-icon'></i></a>
+    <span class=dull ng-hide=temperature>Loading weather...</span>
+    <span ng-show=temperature>
+      <span ng-switch=units>
+        <span ng-switch-when=c>{{temperature}}&deg;C</span>
+        <span ng-switch-when=f>{{temperature * 1.8 + 32}}&deg;F</span>
+        <span ng-switch-when=k>{{temperature + 273}}K</span>
+      </span>
+      <span class=dull>with</span> {{condition | lowercase}}
+      <span ng-hide=hideLocation>
+        <span class=dull>in</span> {{location.city}}, {{location.country}}
+      </span>
+    </span>
+    <span class=right>
+      <button ng-click='showPrefs = !showPrefs' ng-show=editMode>
+        <i class=i-cog ng-class='{active: showPrefs}'></i></button>
+      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <div>
+        Units:
+        <span class=radio-bar>
+          <label>
+            <input type=radio name=tunits value=c ng-model=units><span>Celsius</span>
+          </label>
+          <label>
+            <input type=radio name=tunits value=f ng-model=units><span>Fahrenheit</span>
+          </label>
+          <label>
+            <input type=radio name=tunits value=k ng-model=units><span>Kelvin</span>
+          </label>
+        </span>
+      </div>
+      <label>
+        <input type=checkbox ng-model=hideLocation>
+        <span>Hide Location</span>
+      </label>
+    </div>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/news.html>
+  <div ng-controller=NewsBar>
+    <i class='i-news bullet-icon'></i>
+    <span class=dull ng-hide=items>Loading News...</span>
+    <span ng-show=items>
+      <span ng-repeat='item in items' ng-show='expanded || activeItem === item'>
+        <a href='{{item.link}}'>{{item.title}}</a>
+      </span>
+    </span>
+    <span class=right>
+      <button ng-click='toggleExpand()'>
+        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></button>
+      <button ng-click='showPrefs = !showPrefs' ng-show=editMode>
+        <i class=i-cog></i></button>
+      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <label>Edition: <input type=text placeholder='Leave empty to auto-detect'></label>
+      <!-- <label>Region: <input type=text placeholder='Leave empty to auto-detect'></label> -->
+      <label>
+        <span>Topic:</span>
+        <select ng-model=topic>
+          <option value=>Top
+          <option value=b>Business
+          <option value=e>Entertainment
+          <option value=m>Health
+          <option value=n>Local
+          <option value=t>Sci/Tech
+          <option value=snc>Science
+          <option value=s>Sports
+          <option value=tc>Technology
+          <option value=w>World
+        </select>
+        <span class=dull>({{topic}})</span>
+      </label>
+    </div>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/bookmarks.html>
+  <div ng-controller=BookmarkBar>
+    <a href=chrome://bookmarks><i class='i-bookmark-empty bullet-icon'></i></a>
+    <span ng-repeat='item in bar.children' class=bookmark>
+      <a href='{{item.url}}'>
+        <span>{{item.title}}</span>
+        <i class=i-down-dir ng-if=item.children></i>
+      </a>
+    </span>
+  </div>
+</script>

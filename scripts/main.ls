@@ -1,0 +1,306 @@
+$ng = angular
+app = $ng.module \app, <[ngAnimate]>
+
+app.config ($compileProvider) ->
+  $compileProvider.imgSrcSanitizationWhitelist /^(https?|chrome):/
+  $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome-extension):/
+
+app.directive \href, ->
+  # Fix anchor tags that link to chrome internal pages. Chrome stops them from
+  # working for security reasons.
+  (scope, element, attrs) ->
+    if attrs.href.match /^chrome(-internal)?:/
+      element.on \click, -> chrome.tabs.update url: attrs.href
+
+app.factory \store, ->
+  # A caching abstraction, based on localStorage
+  (scope, defaults) ->
+    # The `$index` and `barName` are assumed to be present in the scope. They
+    # will be present, as long as its the scope a bar controller handled by
+    # AppCtrl in the bar lising `ng-repeat` directive.
+    ns = "store:#{scope.$index}:#{scope.barName}"
+
+    $ng.extend scope, defaults, $ng.fromJson(localStorage[ns])
+
+    build = ->
+      cacheObj = {}
+      for key of defaults
+        cacheObj[key] = scope[key]
+      cacheObj
+
+    save = (cacheObj) ->
+      localStorage[ns] = $ng.toJson cacheObj
+
+    clear = ->
+      delete localStorage[ns]
+
+    scope.$watch build, save, yes
+    scope.$on \$destroy, clear
+
+app.controller \AppCtrl, ($scope, $window) ->
+  $scope.nav = $window.navigator
+
+  # Registry holds bar types available and their default properties.
+  $scope.registry =
+    datetime:
+      title: 'Date and Time'
+      icon: \clock
+    gmail:
+      title: 'GMail'
+      icon: \mail
+    facebook:
+      title: 'Facebook'
+      icon: \facebook
+    weather:
+      title: 'Weather'
+      icon: \weather
+    news:
+      title: 'Google News'
+      icon: \news
+
+  $scope.addNewBar = (name) ->
+    $scope.bars.push name
+
+  $scope.removeBar = (bar) ->
+    $scope.bars.splice $scope.bars.indexOf(bar), 1
+
+  $scope.bars = $ng.fromJson localStorage.bars
+
+  unless $scope.bars
+    # If there are no saved bars, add one of each bar type.
+    $scope.bars = []
+    for name of $scope.registry
+      $scope.addNewBar name
+
+  $scope.$watch \bars, (-> localStorage.bars = $ng.toJson $scope.bars), yes
+
+app.factory \placeQ, ($http, $q, $window) ->
+  defer = $q.defer()
+
+  $window.navigator.geolocation.getCurrentPosition (pos) ->
+    query = "select * from geo.placefinder where text='#{pos.coords.latitude} #{pos.coords.longitude}' and gflags='R' and focus='' limit 1"
+    $http(
+      method: \GET
+      url: 'https://query.yahooapis.com/v1/public/yql'
+      params:
+        format: \json
+        q: query
+      transformResponse: (data) ->
+        data = JSON.parse(data)
+        if data?.query.count then data.query.results.Result
+    ).success((data) ->
+      # console.log 'place data:', data
+      defer.resolve data
+    ).error (err) ->
+      console.log 'place error:', err
+      defer.reject err
+
+  defer.promise
+
+app.controller \BookmarkBar, ($scope, $interval) ->
+  chrome.bookmarks.getTree (tree) ->
+    other = tree[0].children[1]
+    mobile = tree[0].children[2]
+    $scope.bar = tree[0].children[0]
+    do $scope.$digest
+
+app.controller \TimeBar, ($scope, $interval) ->
+  updateTime = ->
+    d = new Date()
+    date = d.getDate()
+    minutes = d.getMinutes()
+    hours = d.getHours()
+
+    suffix = \th
+    if date in [1, 21, 31]
+      suffix = \st
+    else if date in [2, 22]
+      suffix = \nd
+    else if date in [3, 23]
+      suffix = \rd
+
+    $ng.extend $scope,
+      hour12: (hours + 11) % 12 + 1
+      hour24: hours
+      minute: ((if minutes > 9 then '' else '0')) + minutes
+      isAm: hours < 12
+      weekday: weekdays[d.getDay()]
+      date: date
+      dateSuffix: suffix
+      month: months[d.getMonth()]
+      year: d.getFullYear()
+
+  weekdays = <[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]>
+  months = <[January February March April May June July August September October
+                November December]>
+
+  do updateTime
+  $interval updateTime, 1000
+
+app.controller \GMailBar, ($scope, $http, store) ->
+  store $scope,
+    unreads: null
+
+  $http(
+    method: \GET
+    url: 'https://mail.google.com/mail/feed/atom'
+    transformResponse: (data) ->
+      new DOMParser().parseFromString data, \text/xml
+  ).success((response) ->
+    $scope.unreads = response.getElementsByTagName(\fullcount)[0].textContent
+  ).error (err) ->
+    console.log 'gmail failure:', err
+
+app.controller \FacebookBar, ($scope, $http, store) ->
+  store $scope,
+    inbox: null
+    notifications: null
+
+  $http.get(\https://www.facebook.com/desktop_notifications/counts.php).success((data) ->
+    # console.log 'facebook response:', data
+    $scope.inbox = data.inbox
+    $scope.notifications = data.notifications
+  ).error (err) ->
+    console.log 'facebook failure:', err
+
+app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
+  # Thanks to HumbleNewTabPage for help with this.
+  # Weather API: http://developer.yahoo.com/weather/
+
+  updateWeather = (data) ->
+    $ng.extend $scope,
+      temperature: parseInt(data.item.condition.temp, 10)
+      condition: data.item.condition.text
+      location: data.location
+
+  store $scope,
+    temperature: null
+    condition: null
+    location: null
+    units: \c
+    hideLocation: no
+
+  placeQ.then loadWeather = (place) ->
+    query = "select * from weather.forecast where woeid='#{place.woeid}' and u='c' limit 1"
+    $http do
+      method: \GET
+      url: \https://query.yahooapis.com/v1/public/yql
+      params:
+        format: \json
+        q: query
+      transformResponse: (data) ->
+        data = JSON.parse data
+        if data?.query.count then data.query.results.channel
+    .success(updateWeather).error (data) ->
+      console.log 'weather error:', data
+
+
+app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
+  store $scope,
+    items: null
+    edition: null
+    topic: \w
+
+  loadNews = ->
+    $http do
+      method: \GET
+      url: \https://news.google.com/news/feeds
+      params:
+        # cf: \all
+        ned: $scope.edition
+        # region: \in
+        topic: $scope.topic
+        hl: \en
+        output: \rss
+      transformResponse: (data) ->
+        new DOMParser().parseFromString data, \text/xml
+    .success(updateNews).error (err) ->
+      console.log 'news error:', err
+
+  updateNews = (news) ->
+
+    $scope.items = for el in news.getElementsByTagName \item
+      title: el.getElementsByTagName(\title)[0].textContent.trim()
+      link: el.getElementsByTagName(\link)[0].textContent.trim()
+
+    $scope.activeIndex = 0
+    $scope.activeItem = $scope.items[$scope.activeIndex]
+
+  tickNews = ->
+    return if $scope.expanded or not $scope.items
+    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
+    $scope.activeItem = $scope.items[$scope.activeIndex]
+
+  $scope.toggleExpand = ->
+    $scope.expanded = not $scope.expanded
+
+  $scope.$watch \edition, ->
+    if $scope.edition
+      do loadNews
+    else
+      placeQ.then (place) ->
+        $scope.edition = place.countrycode.toLowerCase()
+        do loadNews
+
+  do tickNews
+  $interval tickNews, 9000
+
+app.controller \AppsListCtrl, ($scope) ->
+  chrome.management.getAll (allExts) ->
+
+    apps = for ext in allExts
+      continue if not ext.enabled or ext.type is \extension or ext.type is \theme
+      ext.largestIcon = ext.icons[0]
+
+      for icon in ext.icons
+        if icon.size is 48
+          ext.largestIcon = icon
+          break
+        else if icon.size > ext.largestIcon.size
+          ext.largestIcon = icon
+
+      ext
+
+    $scope.$apply ->
+      $scope.apps = apps
+
+  $scope.uninstall = (app) ->
+    # TODO: Animate the disappearance of the app icon.
+    chrome.management.uninstall app.id, {showConfirmDialog: yes}, ->
+      unless chrome.extension.lastError
+        $scope.apps.splice $scope.apps.indexOf(app), 1
+
+app.directive \tooltip, ->
+  (scope, element, attrs) ->
+    element.after $ng.element(\<div>).addClass(\tooltip).text(attrs.tooltip)
+
+app.directive \menuBox, ($document) ->
+  openedMenu = null
+
+  close = ->
+    openedMenu.removeClass \menu-open if openedMenu
+    openedMenu := null
+
+  open = (element) ->
+    do close
+    openedMenu := element.addClass \menu-open
+
+  $document.on(\click, close).on \keydown, (e) ->
+    do close if e.which is 27 # ESC
+
+  (scope, element, attrs) ->
+    evt = attrs.menuBox or \click
+
+    handler = (e) ->
+      # TODO: Determine the best position for the menu to open and add the
+      # appropriate class(es).
+      if evt is \contextmenu
+        return if e.shiftKey
+        do e.preventDefault
+      else
+        do e.stopPropagation
+      open element
+
+    for child in element[0].children
+      if child.tagName in <[A BUTTON]>
+        child.addEventListener evt, handler

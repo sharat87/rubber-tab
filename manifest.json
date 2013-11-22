@@ -1,0 +1,19 @@
+{
+    "name": "Silly Start Page",
+    "version": "0.1",
+    "description": "A silly simple start page inspired by 'Knew Tab' and 'Humble New Tab Page'",
+    // "icons": {"128": "icons/icon-128.png"},
+    "homepage_url": "http://sharats.me",
+    "chrome_url_overrides": {"newtab": "index.html"},
+    "permissions": [
+        "management",
+        "bookmarks",
+        "geolocation",
+        "https://query.yahooapis.com/",
+        "https://mail.google.com/",
+        "https://www.facebook.com/",
+        "http://ws.geonames.org/",
+        "https://news.google.com/"
+    ],
+    "manifest_version": 2
+}

@@ -1,0 +1,4 @@
+.fontello
+fontello/fontello.*
+scripts/*.js
+styles/*.css

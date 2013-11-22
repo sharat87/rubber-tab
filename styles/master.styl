@@ -1,0 +1,399 @@
+// @import url(http://fonts.googleapis.com/css?family=Roboto:300)
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,500)
+
+*
+  box-sizing border-box
+
+body
+  font normal 18px Ubuntu, sans-serif
+  font-weight 300
+  background-color #444
+  color #FFF
+  margin 0 0 58px
+
+b
+  font-weight 500
+
+button
+  font inherit
+  background-color transparent
+  color #FFF
+  cursor pointer
+
+a
+  text-decoration none
+  color #FFF
+  cursor pointer
+
+  &:hover
+    text-decoration underline
+
+input[type=text]
+  border thin solid rgba(0, 0, 0, .8)
+  border-radius 1px
+  padding 3px
+  font inherit
+
+  &:focus
+    border-color rgba(255, 255, 255, .4)
+
+select
+  vertical-align middle
+  font inherit
+
+#options
+  position absolute
+  height 100%
+  top 0
+  right 0
+  width 420px
+  padding 12px
+  background-color rgba(0, 0, 0, .7)
+  box-shadow 0 0 20px rgba(0, 0, 0, .8)
+
+  label
+    display block
+
+  .close-btn
+    display block
+    border thin solid #FFF
+    border-radius 3px
+    padding 6px
+    width 100%
+    margin 24px 0 0
+    box-shadow 0 0 6px #FFF
+
+    &:hover, &:focus
+      outline none
+      background-color #FFF
+      color #222
+
+    &:active
+      -webkit-transform translatey(1px)
+      box-shadow none
+
+.bar
+  margin 12px
+  background-color rgba(0, 0, 0, .2)
+  border-radius 2px
+  position relative
+  font-size 1.4em
+
+  &:hover
+    background-color rgba(0, 0, 0, .3)
+    box-shadow 0 0 2px rgba(0, 0, 0, .2)
+
+  .bullet-icon:before
+    background-color rgba(0, 0, 0, .2)
+    width 52px
+    line-height 52px
+    margin-right 6px
+
+  .right
+    float right
+
+    button
+      float left
+      background-color rgba(0, 0, 0, .2)
+      border none
+      padding 0
+      margin 0
+      width 52px
+      line-height 52px
+
+      &:hover
+        background-color rgba(0, 0, 0, .4)
+        opacity 1
+
+      &.ok-btn
+        color rgb(170, 255, 170)
+        opacity .7
+
+      &.cancel-btn
+        color rgb(255, 150, 150)
+        opacity .7
+
+  .dull
+    color #999
+
+  .prefs
+    position absolute
+    background rgba(0, 0, 0, .8)
+    padding 6px 12px
+    border-radius 0 0 3px 3px
+    box-shadow 0 6px 24px rgba(0, 0, 0, .7)
+    min-width 500px
+    min-height 120px
+    top 100%
+    right 0
+    z-index 100
+
+    > *
+      display block
+      margin-bottom 12px
+
+  a:hover > i:before
+    background-color rgba(0, 0, 0, .5)
+
+.bookmark > a
+  line-height 52px
+  display inline-block
+  padding 0 6px
+
+  &:hover
+    text-decoration none
+    background-color rgba(0, 0, 0, .2)
+
+  &:active
+    background-color #000
+
+#apps
+  margin 24px 12px
+
+#apps .app-item
+  position relative
+  display inline-block
+
+#apps .app-ln
+  width 52px
+  height 52px
+  text-decoration none
+  display inline-block
+  padding 0 10px
+  border-radius 2px
+  background-color rgba(0, 0, 0, .1)
+  margin-right 12px
+  // Need absolute font size here for the icons to line vertically center.
+  font-size 24px
+
+#apps .app-ln:hover
+  background-color rgba(0, 0, 0, .6)
+  box-shadow 0 0 3px rgba(0, 0, 0, .9)
+
+#apps .app-ln img
+  vertical-align -webkit-baseline-middle
+
+.tooltip
+  position absolute
+  background-color rgba(0, 0, 0, .8)
+  box-shadow 0 2px 6px rgba(0, 0, 0, .3)
+  border-radius 2px 2px 2px 0
+  z-index 1030
+  display none
+  padding 3px 6px
+  bottom calc(100% + 3px)
+  left 0
+  white-space nowrap
+
+*:hover + .tooltip
+  display block
+
+[menu-box]
+  position relative
+
+  .menu
+    position absolute
+    z-index 1000
+    display none
+    float left
+    min-width 160px
+    padding 5px 0
+    margin 2px 0 0
+    list-style none
+    border 1px solid rgba(0, 0, 0, .15)
+    border-radius 9px
+    box-shadow 0 6px 12px rgba(0, 0, 0, .2)
+    background-color rgba(0, 0, 0, .8)
+
+    &.ne
+      bottom 100%
+      left 0
+      border-bottom-left-radius 0
+
+    &.nw
+      bottom 100%
+      right 0
+      border-bottom-right-radius 0
+
+    &.se
+      top 100%
+      left 0
+      border-top-left-radius 0
+
+    a, .header
+      display block
+      padding 3px 20px
+      line-height 1.428571429
+      white-space nowrap
+
+    .header
+      font-weight 500
+
+    a
+      opacity .9
+
+      i
+        margin-right 6px
+        opacity .7
+
+      &:hover
+        background-color #000
+        text-decoration none
+        opacity 1
+
+        i
+          opacity .9
+
+    .divider
+      height 1px
+      margin 9px 0
+      overflow hidden
+      background-color #333
+
+  &.menu-open
+    > .menu
+      display block
+    // > .tooltip
+    //   display none
+
+nav
+  background linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .3))
+  position fixed
+  bottom 0
+  height 37px
+  width 100%
+
+  .right
+    float right
+
+  a, button
+    border none
+    padding 6px 18px
+    text-decoration none
+    opacity .4
+
+    &:hover, &:focus
+      outline none
+      background linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4))
+      opacity 1
+
+    &.active
+      background linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .7))
+      color #09F
+      opacity 1
+
+.radio-bar
+  display inline-block
+  vertical-align middle
+  margin-left 12px
+
+  input[type=radio]
+    display none
+
+    + span
+      cursor pointer
+      border thin solid #FFF
+      padding 0 9px
+
+    &:checked + span
+      cursor default
+      background-color #FFF
+      color #000
+
+  label
+    float left
+
+    + label
+      margin-left -1px
+
+  :first-child span
+    border-radius 3px 0 0 3px
+
+  :last-child span
+    border-radius 0 3px 3px 0
+
+// Transitions & Animations
+.vslide.ng-hide-add,
+.vslide.ng-hide-remove
+  transition .5s linear all
+  display block !important
+  overflow hidden
+
+.vslide.ng-hide-remove,
+.vslide.ng-hide-add.ng-hide-add-active
+  max-height 0
+  opacity 0
+
+.vslide.ng-hide-add,
+.vslide.ng-hide-remove.ng-hide-remove-active
+  max-height 50px
+  opacity 1
+
+#options.ng-hide-add,
+#options.ng-hide-remove
+  transition .1s ease-out all
+  display block !important
+  -webkit-transform-origin right
+
+#options.ng-hide-remove,
+#options.ng-hide-add.ng-hide-add-active
+  -webkit-transform scaleX(0)
+
+#options.ng-hide-add,
+#options.ng-hide-remove.ng-hide-remove-active
+  -webkit-transform scaleX(1)
+
+.v-scale-slide.ng-hide-add,
+.v-scale-slide.ng-hide-remove
+  transition .2s ease-out all
+  display block !important
+  -webkit-transform-origin top
+
+.v-scale-slide.ng-hide-remove,
+.v-scale-slide.ng-hide-add.ng-hide-add-active
+  -webkit-transform scaleY(0)
+  opacity 0
+
+.v-scale-slide.ng-hide-add,
+.v-scale-slide.ng-hide-remove.ng-hide-remove-active
+  -webkit-transform scaleY(1)
+  opacity 1
+
+// Bar list animations
+.bar-item-animate
+  // &.ng-enter, &.ng-leave, &.ng-move
+  //   -webkit-transition .5s linear all
+
+  // The initial bars are also being animated.
+  // &.ng-enter
+  //   opacity 0
+  //   &.ng-enter-active
+  //     opacity 1
+
+  // &.ng-leave
+  //   opacity 1
+  //   &.ng-leave-active
+  //     opacity 0
+
+  // &.ng-move
+  //   opacity .5
+  //   &.ng-move-active
+  //     opacity 1
+
+/* Custom checkboxes and radio buttons.
+ * Adapted from http://stackoverflow.com/a/14226542/151048 */
+input[type=checkbox]
+  display none
+
+input[type=checkbox] + span:before
+  font-family fontello
+  padding-right 3px
+  width 1.2em
+  display inline-block
+
+input[type=checkbox] + span:before
+  content '✗' // check-empty
+
+input[type=checkbox]:checked + span:before
+  content '✓' // check-empty
+
