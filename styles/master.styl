@@ -89,14 +89,15 @@ select
     line-height 52px
     margin-right 6px
 
-  > table
+  > div
     border-spacing 0
     width 100%
+    display table-row
 
-    td
-      vertical-align middle
+    > *
       padding 0 12px
       width 100%
+      display table-cell
 
       &:first-child, &:last-child
         padding 0
