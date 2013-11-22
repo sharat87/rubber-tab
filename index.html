@@ -75,44 +75,54 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 
 <script type=text/ng-template id=bars/datetime.html>
   <div ng-controller=TimeBar>
-    <a href='http://everytimezone.com'><i class=i-clock></i></a>
+    <span class=btns>
+      <a href='http://everytimezone.com'><i class=i-clock></i></a>
+    </span>
     <span>
       <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
       <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span> &mdash;
       {{weekday}}, <b>{{date}}</b><sup>{{dateSuffix}}</sup> {{month}} {{year}}
     </span>
-    <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    <span class=btns>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    </span>
   </div>
 </script>
 
 <script type=text/ng-template id=bars/gmail.html>
   <div ng-controller=GMailBar>
-    <a href=https://gmail.com><i class='i-mail bullet-icon'></i></a>
-      <span class=dull ng-show='unreads == null'>Loading GMail...</span>
+    <span class=btns>
+      <a href='https://gmail.com'><i class=i-mail></i></a>
+    </span>
+    <span class=dull ng-show='unreads == null'>Loading GMail...</span>
     <span ng-show='unreads != null'>{{unreads}} unread mails</span>
-    <span class=right>
-      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    <span class=btns>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
   </div>
 </script>
 
 <script type=text/ng-template id=bars/facebook.html>
   <div ng-controller=FacebookBar>
-    <a href=https://facebook.com><i class='i-facebook bullet-icon'></i></a>
+    <span class=btns>
+      <a href='https://facebook.com'><i class=i-facebook></i></a>
+    </span>
     <span class=dull ng-show='inbox == null'>Loading Facebook...</span>
     <span ng-show='inbox != null'>
       {{notifications.num_unread}} notifications and
       {{inbox.unread}} unread messages
     </span>
-    <span class=right>
-      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    <span class=btns>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
   </div>
 </script>
 
 <script type=text/ng-template id=bars/weather.html>
   <div ng-controller=WeatherBar>
-    <a href='https://google.co.in/search?q=weather'><i class='i-weather bullet-icon'></i></a>
+    <span class=btns>
+      <a href='https://google.co.in/search?q=weather'><i class=i-weather></i></a>
+    </span>
     <span class=dull ng-hide=temperature>Loading weather...</span>
     <span ng-show=temperature>
       <span ng-switch=units>
@@ -125,10 +135,10 @@ directives and their controllers, mainly to access `id` and `config` attributes.
         <span class=dull>in</span> {{location.city}}, {{location.country}}
       </span>
     </span>
-    <span class=right>
-      <button ng-click='showPrefs = !showPrefs' ng-show=editMode>
-        <i class=i-cog ng-class='{active: showPrefs}'></i></button>
-      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    <span class=btns>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode>
+        <i class=i-cog ng-class='{active: showPrefs}'></i></a>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <div>
@@ -155,19 +165,21 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 
 <script type=text/ng-template id=bars/news.html>
   <div ng-controller=NewsBar>
-    <span class=left><i class='i-news bullet-icon'></i></span>
+    <span class=btns>
+      <i class='i-news bullet-icon'></i>
+    </span>
     <span class=dull ng-hide=items>Loading News...</span>
     <span ng-show=items>
       <span ng-repeat='item in items' ng-show='expanded || activeItem === item'>
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
-    <span class=right>
-      <button ng-click='toggleExpand()'>
-        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></button>
-      <button ng-click='showPrefs = !showPrefs' ng-show=editMode>
-        <i class=i-cog></i></button>
-      <button ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></button>
+    <span class=btns>
+      <a ng-click='toggleExpand()'>
+        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode>
+        <i class=i-cog></i></a>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <label>Edition: <input type=text placeholder='Leave empty to auto-detect'></label>

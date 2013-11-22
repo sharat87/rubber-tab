@@ -83,54 +83,36 @@ select
     background-color rgba(0, 0, 0, .3)
     box-shadow 0 0 2px rgba(0, 0, 0, .2)
 
-  .bullet-icon:before
-    background-color rgba(0, 0, 0, .2)
-    width 52px
-    line-height 52px
-    margin-right 6px
-
   > div
     border-spacing 0
     width 100%
     display table-row
+
+    a
+      display inline-block
 
     > *
       padding 0 12px
       width 100%
       display table-cell
 
-      &:first-child, &:last-child
+      &.btns
         padding 0
         width auto
+        white-space nowrap
 
         i:before
           background-color rgba(0, 0, 0, .2)
           width 52px
           line-height 52px
 
-  .right
-    float right
+    .ok-btn
+      color rgb(170, 255, 170)
+      opacity .7
 
-    button
-      float left
-      background-color rgba(0, 0, 0, .2)
-      border none
-      padding 0
-      margin 0
-      width 52px
-      line-height 52px
-
-      &:hover
-        background-color rgba(0, 0, 0, .4)
-        opacity 1
-
-      &.ok-btn
-        color rgb(170, 255, 170)
-        opacity .7
-
-      &.cancel-btn
-        color rgb(255, 150, 150)
-        opacity .7
+    .cancel-btn
+      color rgb(255, 150, 150)
+      opacity .7
 
   .dull
     color #999
