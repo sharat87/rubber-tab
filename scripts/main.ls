@@ -235,13 +235,12 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
   $scope.toggleExpand = ->
     $scope.expanded = not $scope.expanded
 
-  $scope.$watch \edition, ->
-    if $scope.edition
+  if $scope.edition
+    do loadNews
+  else
+    placeQ.then (place) ->
+      $scope.edition = place.countrycode.toLowerCase()
       do loadNews
-    else
-      placeQ.then (place) ->
-        $scope.edition = place.countrycode.toLowerCase()
-        do loadNews
 
   do tickNews
   $interval tickNews, 9000
