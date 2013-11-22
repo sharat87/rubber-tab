@@ -1,4 +1,5 @@
 .fontello
-fontello/fontello.*
+fontello/*
+!fontello/config.json
 scripts/*.js
 styles/*.css

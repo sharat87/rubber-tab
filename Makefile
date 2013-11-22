@@ -34,7 +34,7 @@ save-fontello:
 	@unzip .fontello.zip -d .fontello.src > /dev/null
 	cat .fontello.src/*/css/{fontello-embedded,animation}.css \
 		| grep -v margin | sed s,/font/,/fontello/, \
-		> styles/fontello.css
+		> fontello/all.css
 	mv .fontello.src/*/{config.json,font/fontello.{eot,svg}} fontello
 #	sed 's,\<css/,../styles/,' .fontello.src/*/demo.html > fontello/demo.html
 	@rm -rf .fontello.{src,zip}
