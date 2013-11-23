@@ -167,21 +167,16 @@ app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
   # Thanks to HumbleNewTabPage for help with this.
   # Weather API: http://developer.yahoo.com/weather/
 
-  updateWeather = (data) ->
-    $ng.extend $scope,
-      temperature: parseInt(data.item.condition.temp, 10)
-      condition: data.item.condition.text
-      location: data.location
-
   store $scope,
     temperature: null
     condition: null
-    location: null
+    address: ''
+    location: {}
     units: \c
     hideLocation: no
 
-  placeQ.then loadWeather = (place) ->
-    query = "select * from weather.forecast where woeid='#{place.woeid}' and u='c' limit 1"
+  loadWeather = (woeid, address='') ->
+    query = "select * from weather.forecast where woeid='#{woeid}' and u='c' limit 1"
     $http do
       method: \GET
       url: \https://query.yahooapis.com/v1/public/yql
@@ -191,9 +186,44 @@ app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
       transformResponse: (data) ->
         data = JSON.parse data
         if data?.query.count then data.query.results.channel
-    .success(updateWeather).error (data) ->
+    .success (data) ->
+      $ng.extend $scope,
+        temperature: parseInt data.item.condition.temp, 10
+        condition: data.item.condition.text
+        location:
+          address: address
+          city: data.location.city
+          country: data.location.country
+          woeid: woeid
+    .error (data) ->
       console.log 'weather error:', data
 
+  if $scope.address
+
+    if $scope.address is $scope.location.address
+      loadWeather $scope.location.woeid, $scope.address
+
+    else
+      $scope.temperature = null
+      query = "select * from geo.placefinder where text='#{$scope.address}' and gflags='R' and focus='' limit 1"
+      $http do
+        method: \GET
+        url: 'https://query.yahooapis.com/v1/public/yql'
+        params:
+          format: \json
+          q: query
+        transformResponse: (data) ->
+          data = JSON.parse(data)
+          if data?.query.count then data.query.results.Result
+      .success (data) ->
+        console.log 'place data:', data
+        loadWeather data.woeid, $scope.address
+      .error (err) ->
+        $scope.location = null
+        console.log 'place error:', err
+
+  else
+    placeQ.then (place) -> loadWeather place.woeid
 
 app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
   store $scope,
