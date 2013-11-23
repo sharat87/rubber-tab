@@ -141,7 +141,9 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       </span>
       <span class=dull>with</span> {{condition | lowercase}}
       <span ng-hide=hideLocation>
-        <span class=dull>in</span> {{location.city}}, {{location.country}}
+        <span class=dull>in</span>
+        {{location.city}}<span ng-if='location.city != location.country'>,
+          {{location.country}}</span>
       </span>
     </span>
     <span class=btns>
