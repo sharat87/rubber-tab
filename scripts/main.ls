@@ -223,6 +223,9 @@ app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
         console.log 'place error:', err
 
   else
+    if $scope.location.address
+      $scope.temperature = null
+
     placeQ.then (place) -> loadWeather place.woeid
 
 app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
