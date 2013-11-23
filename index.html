@@ -89,12 +89,23 @@ directives and their controllers, mainly to access `id` and `config` attributes.
     </span>
     <span>
       <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
-      <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span> &mdash;
+      <span ng-if=!use24>
+        <span ng-show=isAm>AM</span><span ng-hide=isAm>PM</span>
+      </span>
+      &mdash;
       {{weekday}}, <b>{{date}}</b><sup>{{dateSuffix}}</sup> {{month}} {{year}}
     </span>
     <span class=btns>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode>
+        <i class=i-cog ng-class='{active: showPrefs}'></i></a>
       <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <label>
+        <input type=checkbox ng-model=use24>
+        <span>Use 24 hour time</span>
+      </label>
+    </div>
   </div>
 </script>
 

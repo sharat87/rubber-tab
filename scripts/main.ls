@@ -104,7 +104,10 @@ app.controller \BookmarkBar, ($scope, $interval) ->
     $scope.bar = tree[0].children[0]
     do $scope.$digest
 
-app.controller \TimeBar, ($scope, $interval) ->
+app.controller \TimeBar, ($scope, $interval, store) ->
+  store $scope,
+    use24: no
+
   updateTime = ->
     d = new Date()
     date = d.getDate()
