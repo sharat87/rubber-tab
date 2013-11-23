@@ -146,12 +146,22 @@ select
       display block
       margin-bottom 12px
 
-    label span:first-child
-      width 120px
-      display inline-block
+    label
 
-      + *
-        width 280px
+      span:first-child
+        width 120px
+        display inline-block
+
+        + *
+          width 280px
+
+      .tip
+        margin-left 120px
+
+    .tip
+      color #CCC
+      font-size .8em
+      display block
 
 .bookmark > a
   line-height 52px

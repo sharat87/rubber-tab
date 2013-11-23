@@ -167,11 +167,13 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       <label>
         <span>Location:</span>
         <input type=text ng-model=address placeholder='Leave empty to autodetect'>
+        <span class=tip>Just <b>City</b> or <b>City, Country</b>.</span>
       </label>
       <label>
         <input type=checkbox ng-model=hideLocation>
         <span>Hide Location</span>
       </label>
+      <p class=dull>Changes to location take effect after refresh.</p>
     </div>
   </div>
 </script>
