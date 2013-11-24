@@ -361,3 +361,14 @@ app.directive \menuBox, ($document) ->
     for child in element[0].children
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
+
+app.directive \btns, ->
+  # Remove all immediate children that are text nodes. This is used on icon
+  # buttons in the bar where the newline used in the html markup is coming up as
+  # a small gap between the buttons. The only solution I found is to remove
+  # these text nodes manually.
+  restrict: 'C'
+  link: (scope, element, attrs) ->
+    element = element[0]
+    for child in element.childNodes
+      element.removeChild child if child.nodeType is 3
