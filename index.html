@@ -86,8 +86,8 @@ directives and their controllers, mainly to access `id` and `config` attributes.
   <div ng-controller=TimeBar>
     <span class=btns>
       <span class=reorder-btns>
-        <a><i class=i-move-up></i></a>
-        <a><i class=i-move-down></i></a>
+        <a ng-click='moveUp(bar)'><i class=i-move-up></i></a>
+        <a ng-click='moveDown(bar)'><i class=i-move-down></i></a>
       </span>
       <a href='http://everytimezone.com'><i class=i-clock></i></a>
     </span>

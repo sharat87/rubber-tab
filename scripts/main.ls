@@ -77,6 +77,14 @@ app.controller \AppCtrl, ($scope, $window) ->
 
   $scope.$watch \bars, (-> localStorage.bars = $ng.toJson $scope.bars), yes
 
+  $scope.moveUp = (bar) ->
+    # TODO: Implement
+    console.error 'moveUp unimplemented', bar
+
+  $scope.moveDown = (bar) ->
+    # TODO: Implement
+    console.error 'moveDown unimplemented', bar
+
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
 
