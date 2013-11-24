@@ -194,7 +194,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 <script type=text/ng-template id=bars/news.html>
   <div ng-controller=NewsBar>
     <span class=btns>
-      <i class='i-news bullet-icon'></i>
+      <i class=i-news></i>
     </span>
     <span class=dull ng-hide=items>Loading News...</span>
     <span ng-show=items>
@@ -231,6 +231,36 @@ directives and their controllers, mainly to access `id` and `config` attributes.
         </select>
       </label>
       <p class=dull>Changes take effect after refresh.</p>
+    </div>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/topsites.html>
+  <div ng-controller=TopSitesBar>
+    <span class=btns>
+      <i class=i-history></i>
+    </span>
+    <span class=dull ng-hide=items>Loading your most visited sites...</span>
+    <span ng-show=items>
+      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
+          ng-class='{expanded: expanded}'>
+        <a href='{{item.url}}'>
+          <img ng-src='chrome://favicon/{{item.url}}' ng-show=showFavicons>
+          {{item.title}} <span class=dull>{{item.url}}</span>
+        </a>
+      </span>
+    </span>
+    <span class=btns>
+      <a ng-click='toggleExpand()'>
+        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <label>
+        <input type=checkbox ng-model=showFavicons>
+        <span>Show favicons</span>
+      </label>
     </div>
   </div>
 </script>

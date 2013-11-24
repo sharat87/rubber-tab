@@ -57,6 +57,9 @@ app.controller \AppCtrl, ($scope, $window) ->
     news:
       title: 'Google News'
       icon: \news
+    topsites:
+      title: 'Top Sites'
+      icon: \history
 
   $scope.addNewBar = (name) ->
     $scope.bars.push name
@@ -280,6 +283,24 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
 
   do tickNews
   $interval tickNews, 9000
+
+app.controller \TopSitesBar, ($scope, $interval, store) ->
+  store $scope,
+    showFavicons: yes
+
+  chrome.topSites.get (items) -> console.log($scope.items = items)
+
+  # FIXME: Code repetition, copied from news widget.
+  $scope.activeIndex = 0
+  tick = ->
+    return if $scope.expanded or not $scope.items
+    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
+
+  $scope.toggleExpand = ->
+    $scope.expanded = not $scope.expanded
+
+  do tick
+  $interval tick, 4000
 
 app.controller \AppsListCtrl, ($scope) ->
   chrome.management.getAll (allExts) ->
