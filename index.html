@@ -85,7 +85,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
 <script type=text/ng-template id=bars/datetime.html>
   <div ng-controller=TimeBar>
     <span class=btns>
-      <span class=reorder-btns>
+      <span class=reorder-btns ng-show=editMode>
         <a ng-click='moveUp(bar)'><i class=i-move-up></i></a>
         <a ng-click='moveDown(bar)'><i class=i-move-down></i></a>
       </span>
