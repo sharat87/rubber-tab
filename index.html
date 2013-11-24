@@ -245,7 +245,7 @@ directives and their controllers, mainly to access `id` and `config` attributes.
       <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
           ng-class='{expanded: expanded}'>
         <a href='{{item.url}}'>
-          <img ng-src='chrome://favicon/{{item.url}}' ng-show=showFavicons>
+          <img ng-src='chrome://favicon/{{item.url}}' ng-show='expanded || showFavicons'>
           {{item.title}} <span class=dull>{{item.url}}</span>
         </a>
       </span>
