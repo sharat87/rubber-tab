@@ -1,6 +1,15 @@
 $ng = angular
 app = $ng.module \app, <[ngAnimate]>
 
+app.run ->
+  # Transition from the old way of saving bars to the new serialization method.
+  return unless localStorage.bars and not localStorage.lastId
+  bars = $ng.fromJson localStorage.bars
+  localStorage.lastId = 0
+  if $ng.isString bars[0]
+    bars = [{name, id: localStorage.lastId++} for name in bars]
+    localStorage.bars = $ng.toJson bars
+
 app.config ($compileProvider) ->
   $compileProvider.imgSrcSanitizationWhitelist /^(https?|chrome):/
   $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome-extension):/
