@@ -37,29 +37,29 @@ app.factory \store, ->
     scope.$watch build, save, yes
     scope.$on \$destroy, clear
 
-app.controller \AppCtrl, ($scope, $window) ->
-  $scope.nav = $window.navigator
+app.value \registry,
+  # Registry holds bar types available and some metadata about them.
+  datetime:
+    title: 'Date and Time'
+    icon: \clock
+  gmail:
+    title: 'GMail'
+    icon: \mail
+  facebook:
+    title: 'Facebook'
+    icon: \facebook
+  weather:
+    title: 'Weather'
+    icon: \weather
+  news:
+    title: 'Google News'
+    icon: \news
+  topsites:
+    title: 'Top Sites'
+    icon: \history
 
-  # Registry holds bar types available and their default properties.
-  $scope.registry =
-    datetime:
-      title: 'Date and Time'
-      icon: \clock
-    gmail:
-      title: 'GMail'
-      icon: \mail
-    facebook:
-      title: 'Facebook'
-      icon: \facebook
-    weather:
-      title: 'Weather'
-      icon: \weather
-    news:
-      title: 'Google News'
-      icon: \news
-    topsites:
-      title: 'Top Sites'
-      icon: \history
+app.controller \AppCtrl, ($scope, $window, registry) ->
+  $scope.nav = $window.navigator
 
   $scope.addNewBar = (name) ->
     # FIXME: More reliable id's here please.
@@ -73,7 +73,7 @@ app.controller \AppCtrl, ($scope, $window) ->
   unless $scope.bars
     # If there are no saved bars, add one of each bar type.
     $scope.bars = []
-    for name of $scope.registry
+    for name of registry
       $scope.addNewBar name
 
   $scope.$watchCollection \bars, -> localStorage.bars = $ng.toJson $scope.bars
@@ -373,10 +373,10 @@ app.directive \menuBox, ($document) ->
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
 
-app.directive \leftBtns, ->
+app.directive \leftBtns, (registry) ->
   restrict: \E
   templateUrl: \left-btns.html
   replace: yes
   link: (scope, element, attrs) ->
-    # Get the icon from registry, with the name from `scope.bar.name`.
-    element.append "<a href='#{attrs.href}'><i class=i-#{attrs.icon}></i></a>"
+    icon = registry[scope.bar.name].icon
+    element.append "<a href='#{attrs.href}'><i class=i-#{icon}></i></a>"
