@@ -10,9 +10,9 @@
 <body ng-csp ng-app=app ng-controller=AppCtrl>
 
 <!-- This bar variable, declared in `ng-repeat` is used by the template
-directives and their controllers, mainly to access `id` and `config` attributes. -->
-<div ng-repeat='barName in bars track by $index' ng-include='"bars/" + barName + ".html"'
-  class='bar bar-item-animate' name='{{barName}}'></div>
+directives and their controllers. -->
+<div ng-repeat='bar in bars track by bar.id' ng-include='"bars/" + bar.name + ".html"'
+  class='bar bar-item-animate' name='{{bar.name}}'></div>
 
 <div id=apps ng-controller=AppsListCtrl>
   <span class=app-item ng-repeat='app in apps | orderBy:"name"'

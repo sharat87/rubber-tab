@@ -15,10 +15,10 @@ app.directive \href, ->
 app.factory \store, ->
   # A caching abstraction, based on localStorage
   (scope, defaults) ->
-    # The `$index` and `barName` are assumed to be present in the scope. They
-    # will be present, as long as its the scope a bar controller handled by
-    # AppCtrl in the bar lising `ng-repeat` directive.
-    ns = "store:#{scope.$index}:#{scope.barName}"
+    # The `bar` object is assumed to be present on the scope. It will be
+    # present, as long as its the scope of a bar controller handled by AppCtrl
+    # in the bar lising `ng-repeat` directive.
+    ns = "store:#{scope.bar.id}:#{scope.bar.name}"
 
     $ng.extend scope, defaults, $ng.fromJson(localStorage[ns])
 
@@ -62,7 +62,8 @@ app.controller \AppCtrl, ($scope, $window) ->
       icon: \history
 
   $scope.addNewBar = (name) ->
-    $scope.bars.push name
+    # FIXME: More reliable id's here please.
+    $scope.bars.push {name, id: Math.random()}
 
   $scope.removeBar = (bar) ->
     $scope.bars.splice $scope.bars.indexOf(bar), 1
@@ -75,15 +76,15 @@ app.controller \AppCtrl, ($scope, $window) ->
     for name of $scope.registry
       $scope.addNewBar name
 
-  $scope.$watch \bars, (-> localStorage.bars = $ng.toJson $scope.bars), yes
+  $scope.$watchCollection \bars, -> localStorage.bars = $ng.toJson $scope.bars
 
-  $scope.moveUp = (bar) ->
+  $scope.moveUp = ($index) ->
     # TODO: Implement
-    console.error 'moveUp unimplemented', bar
+    console.error 'moveUp unimplemented', $index
 
-  $scope.moveDown = (bar) ->
+  $scope.moveDown = ($index) ->
     # TODO: Implement
-    console.error 'moveDown unimplemented', bar
+    console.error 'moveUp unimplemented', $index
 
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
