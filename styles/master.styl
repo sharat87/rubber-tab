@@ -181,23 +181,25 @@ select
 
 .bar-item-animate
   // Bar animations
-  // &.ng-enter, &.ng-leave, &.ng-move
-  //   transition .5s linear all
 
-  // // The initial bars are also being animated.
+  // // FIXME: The initial bars are also being animated.
   // &.ng-enter
   //   opacity 0
   //   &.ng-enter-active
   //     opacity 1
 
-  // &.ng-leave
-  //   opacity 1
-  //   &.ng-leave-active
-  //     opacity 0
+  &.ng-leave
+    overflow hidden
+    transition all .5s ease
+    height 52px
+    opacity 1
+    &.ng-leave-active
+      height 0
+      opacity 0
 
   &.ng-move
+    transition all .5s ease
     -webkit-transform translateY(64px)
-    transition all 1s ease
     &.ng-move-active
       -webkit-transform translateY(0)
 
