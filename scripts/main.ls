@@ -63,8 +63,8 @@ app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.registry = registry
 
   $scope.addNewBar = (name) ->
-    # FIXME: More reliable id's here please.
-    $scope.bars.push {name, id: Math.random()}
+    localStorage.lastId or= 0
+    $scope.bars.push {name, id: ++localStorage.lastId}
 
   $scope.removeBar = (bar) ->
     $scope.bars.splice $scope.bars.indexOf(bar), 1
