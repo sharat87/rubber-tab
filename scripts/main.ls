@@ -78,13 +78,15 @@ app.controller \AppCtrl, ($scope, $window) ->
 
   $scope.$watchCollection \bars, -> localStorage.bars = $ng.toJson $scope.bars
 
-  $scope.moveUp = ($index) ->
+  $scope.moveUp = (bar) ->
     # TODO: Implement
-    console.error 'moveUp unimplemented', $index
+    console.error 'moveUp unimplemented', bar
 
-  $scope.moveDown = ($index) ->
+  $scope.moveDown = (bar) ->
     # TODO: Implement
-    console.error 'moveUp unimplemented', $index
+    index = $scope.bars.indexOf(bar)
+    $scope.bars.splice index, 1
+    $scope.bars.splice index + 1, 0, bar
 
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
