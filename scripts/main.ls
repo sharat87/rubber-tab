@@ -379,4 +379,4 @@ app.directive \leftBtns, (registry) ->
   replace: yes
   link: (scope, element, attrs) ->
     icon = registry[scope.bar.name].icon
-    element.append "<a href='#{attrs.href}'><i class=i-#{icon}></i></a>"
+    element.append "<a href='#{attrs.iref}'><i class=i-#{icon}></i></a>"

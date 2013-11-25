@@ -94,7 +94,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/datetime.html>
   <div ng-controller=TimeBar>
-    <left-btns href='http://everytimezone.com'></left-btns>
+    <left-btns iref='http://everytimezone.com'></left-btns>
     <span>
       <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
       <span ng-if=!use24>
@@ -119,7 +119,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/gmail.html>
   <div ng-controller=GMailBar>
-    <left-btns href='https://gmail.com'></left-btns>
+    <left-btns iref='https://gmail.com'></left-btns>
     <span class=dull ng-show='unreads == null'>Loading GMail...</span>
     <span ng-show='unreads != null'>{{unreads}} unread mails</span>
     <span class=btns>
@@ -130,7 +130,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/facebook.html>
   <div ng-controller=FacebookBar>
-    <left-btns href='https://facebook.com'></left-btns>
+    <left-btns iref='https://facebook.com'></left-btns>
     <span class=dull ng-show='inbox == null'>Loading Facebook...</span>
     <span ng-show='inbox != null'>
       {{notifications.num_unread}} notifications and
@@ -144,7 +144,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/weather.html>
   <div ng-controller=WeatherBar>
-    <left-btns href='https://google.co.in/search?q=weather'></left-btns>
+    <left-btns iref='https://google.co.in/search?q=weather'></left-btns>
     <span class=dull ng-hide=temperature>Loading weather...</span>
     <span ng-show=temperature>
       <span ng-switch=units>
@@ -195,7 +195,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/news.html>
   <div ng-controller=NewsBar>
-    <left-btns href='https://news.google.com'></left-btns>
+    <left-btns iref='https://news.google.com'></left-btns>
     <span class=dull ng-hide=items>Loading News...</span>
     <span ng-show=items>
       <span ng-repeat='item in items' ng-show='expanded || activeItem === item'
@@ -237,7 +237,7 @@ directives and their controllers. -->
 
 <script type=text/ng-template id=bars/topsites.html>
   <div ng-controller=TopSitesBar>
-    <left-btns href='chrome://history'></left-btns>
+    <left-btns iref='chrome://history'></left-btns>
     <span class=dull ng-hide=items>Loading your most visited sites...</span>
     <span ng-show=items>
       <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
