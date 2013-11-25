@@ -60,6 +60,7 @@ app.value \registry,
 
 app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.nav = $window.navigator
+  $scope.registry = registry
 
   $scope.addNewBar = (name) ->
     # FIXME: More reliable id's here please.
