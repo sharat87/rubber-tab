@@ -15,10 +15,10 @@ app.directive \href, ->
 app.factory \store, ->
   # A caching abstraction, based on localStorage
   (scope, defaults) ->
-    # The `$index` and `barName` are assumed to be present in the scope. They
-    # will be present, as long as its the scope a bar controller handled by
-    # AppCtrl in the bar lising `ng-repeat` directive.
-    ns = "store:#{scope.$index}:#{scope.barName}"
+    # The `bar` object is assumed to be present on the scope. It will be
+    # present, as long as its the scope of a bar controller handled by AppCtrl
+    # in the bar lising `ng-repeat` directive.
+    ns = "store:#{scope.bar.id}:#{scope.bar.name}"
 
     $ng.extend scope, defaults, $ng.fromJson(localStorage[ns])
 
@@ -37,32 +37,33 @@ app.factory \store, ->
     scope.$watch build, save, yes
     scope.$on \$destroy, clear
 
-app.controller \AppCtrl, ($scope, $window) ->
+app.value \registry,
+  # Registry holds bar types available and some metadata about them.
+  datetime:
+    title: 'Date and Time'
+    icon: \clock
+  gmail:
+    title: 'GMail'
+    icon: \mail
+  facebook:
+    title: 'Facebook'
+    icon: \facebook
+  weather:
+    title: 'Weather'
+    icon: \weather
+  news:
+    title: 'Google News'
+    icon: \news
+  topsites:
+    title: 'Top Sites'
+    icon: \history
+
+app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.nav = $window.navigator
 
-  # Registry holds bar types available and their default properties.
-  $scope.registry =
-    datetime:
-      title: 'Date and Time'
-      icon: \clock
-    gmail:
-      title: 'GMail'
-      icon: \mail
-    facebook:
-      title: 'Facebook'
-      icon: \facebook
-    weather:
-      title: 'Weather'
-      icon: \weather
-    news:
-      title: 'Google News'
-      icon: \news
-    topsites:
-      title: 'Top Sites'
-      icon: \history
-
   $scope.addNewBar = (name) ->
-    $scope.bars.push name
+    # FIXME: More reliable id's here please.
+    $scope.bars.push {name, id: Math.random()}
 
   $scope.removeBar = (bar) ->
     $scope.bars.splice $scope.bars.indexOf(bar), 1
@@ -72,10 +73,20 @@ app.controller \AppCtrl, ($scope, $window) ->
   unless $scope.bars
     # If there are no saved bars, add one of each bar type.
     $scope.bars = []
-    for name of $scope.registry
+    for name of registry
       $scope.addNewBar name
 
-  $scope.$watch \bars, (-> localStorage.bars = $ng.toJson $scope.bars), yes
+  $scope.$watchCollection \bars, -> localStorage.bars = $ng.toJson $scope.bars
+
+  $scope.moveUp = (bar) ->
+    index = $scope.bars.indexOf bar
+    $scope.bars.splice index, 1
+    $scope.bars.splice index - 1, 0, bar
+
+  $scope.moveDown = (bar) ->
+    index = $scope.bars.indexOf bar
+    $scope.bars.splice index, 1
+    $scope.bars.splice index + 1, 0, bar
 
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
@@ -362,13 +373,26 @@ app.directive \menuBox, ($document) ->
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
 
+app.directive \leftBtns, (registry) ->
+  restrict: \E
+  templateUrl: \left-btns.html
+  replace: yes
+  link: (scope, element, attrs) ->
+    icon = registry[scope.bar.name].icon
+    element.append "<a href='#{attrs.iref}'><i class=i-#{icon}></i></a>"
+
 app.directive \btns, ->
   # Remove all immediate children that are text nodes. This is used on icon
   # buttons in the bar where the newline used in the html markup is coming up as
   # a small gap between the buttons. The only solution I found is to remove
   # these text nodes manually.
+
+  clean = (el) ->
+    for child in el.childNodes
+      if child?.nodeType is 3
+        el.removeChild child
+    for child in el.children
+      clean child
+
   restrict: 'C'
-  link: (scope, element, attrs) ->
-    element = element[0]
-    for child in element.childNodes
-      element.removeChild child if child.nodeType is 3
+  link: (scope, element, attrs) -> clean element[0]
