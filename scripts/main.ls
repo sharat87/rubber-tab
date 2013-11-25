@@ -80,13 +80,15 @@ app.controller \AppCtrl, ($scope, $window, registry) ->
 
   $scope.moveUp = (bar) ->
     index = $scope.bars.indexOf bar
-    $scope.bars.splice index, 1
-    $scope.bars.splice index - 1, 0, bar
+    tmp = $scope.bars[index]
+    $scope.bars[index] = $scope.bars[index - 1]
+    $scope.bars[index - 1] = tmp
 
   $scope.moveDown = (bar) ->
     index = $scope.bars.indexOf bar
-    $scope.bars.splice index, 1
-    $scope.bars.splice index + 1, 0, bar
+    tmp = $scope.bars[index]
+    $scope.bars[index] = $scope.bars[index + 1]
+    $scope.bars[index + 1] = tmp
 
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()

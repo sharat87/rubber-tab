@@ -86,7 +86,7 @@ select
     background-color rgba(0, 0, 0, .3)
     box-shadow 0 0 2px rgba(0, 0, 0, .2)
 
-  > div
+  [ng-controller]
     border-spacing 0
     width 100%
     display table-row
@@ -178,6 +178,35 @@ select
       color #CCC
       font-size .8em
       display block
+
+.bar-item-animate
+  // Bar animations
+  // &.ng-enter, &.ng-leave, &.ng-move
+  //   transition .5s linear all
+
+  // // The initial bars are also being animated.
+  // &.ng-enter
+  //   opacity 0
+  //   &.ng-enter-active
+  //     opacity 1
+
+  // &.ng-leave
+  //   opacity 1
+  //   &.ng-leave-active
+  //     opacity 0
+
+  &.ng-move
+    -webkit-transform translateY(64px)
+    transition all 1s ease
+    &.ng-move-active
+      -webkit-transform translateY(0)
+
+  &.ng-move + div
+    -webkit-transform translateY(-64px)
+
+  &.ng-move.ng-move-active + div
+    -webkit-transform translateY(0)
+    transition all 1s ease
 
 .bookmark > a
   line-height 52px
@@ -401,27 +430,6 @@ nav
 .v-scale-slide.ng-hide-remove.ng-hide-remove-active
   -webkit-transform scaleY(1)
   opacity 1
-
-// Bar list animations
-.bar-item-animate
-  // &.ng-enter, &.ng-leave, &.ng-move
-  //   -webkit-transition .5s linear all
-
-  // The initial bars are also being animated.
-  // &.ng-enter
-  //   opacity 0
-  //   &.ng-enter-active
-  //     opacity 1
-
-  // &.ng-leave
-  //   opacity 1
-  //   &.ng-leave-active
-  //     opacity 0
-
-  // &.ng-move
-  //   opacity .5
-  //   &.ng-move-active
-  //     opacity 1
 
 /* Custom checkboxes and radio buttons.
  * Adapted from http://stackoverflow.com/a/14226542/151048 */
