@@ -82,15 +82,19 @@ directives and their controllers. -->
   - An RSS ticker.
 -->
 
+<script type=text/ng-template id=left-btns.html>
+  <span class=btns>
+    <span class=reorder-btns ng-show=editMode>
+      <a ng-click='moveUp(bar)' ng-show=!$first><i class=i-move-up></i></a>
+      <a ng-click='moveDown(bar)' ng-show=!$last><i class=i-move-down></i></a>
+    </span>
+    <!-- Bar icon should be added here. -->
+  </span>
+</script>
+
 <script type=text/ng-template id=bars/datetime.html>
   <div ng-controller=TimeBar>
-    <span class=btns>
-      <span class=reorder-btns ng-show=editMode>
-        <a ng-click='moveUp(bar)' ng-show=!$first><i class=i-move-up></i></a>
-        <a ng-click='moveDown(bar)' ng-show=!$last><i class=i-move-down></i></a>
-      </span>
-      <a href='http://everytimezone.com'><i class=i-clock></i></a>
-    </span>
+    <left-btns href='http://everytimezone.com' icon=clock></left-btns>
     <span>
       <b>{{use24 ? hour24 : hour12}}</b>:<b>{{minute}}</b>
       <span ng-if=!use24>

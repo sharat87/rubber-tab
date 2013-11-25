@@ -372,3 +372,11 @@ app.directive \menuBox, ($document) ->
     for child in element[0].children
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
+
+app.directive \leftBtns, ->
+  restrict: \E
+  templateUrl: \left-btns.html
+  replace: yes
+  link: (scope, element, attrs) ->
+    # Get the icon from registry, with the name from `scope.bar.name`.
+    element.append "<a href='#{attrs.href}'><i class=i-#{attrs.icon}></i></a>"
