@@ -235,7 +235,7 @@ select
     text-decoration none
     display inline-block
     padding 0 10px
-    border-radius 2px
+    border-radius 3px
     background-color rgba(0, 0, 0, .1)
     margin-right 12px
     // Need absolute font size here for the icons to line vertically center.
@@ -251,11 +251,23 @@ select
     &.new
       background-color #08B
       box-shadow 0 0 9px #08B
-      transition all 1s ease
-      -webkit-transform scale(1.2)
+      // transition -webkit-transform .5s ease, background-color 1s ease, box-shadow 1s ease
+      -webkit-transform scale(1.1)
 
       &:hover
         box-shadow 0 0 48px #08B
+
+      &:after
+        content 'NEW'
+        background-color rgba(255, 50, 50, 1)
+        color white
+        padding 0 3px
+        -webkit-transform scale(.5)
+        -webkit-transform-origin bottom right
+        position absolute
+        border-radius 6px 0
+        right 0
+        bottom 0
 
 .tip
   position absolute
