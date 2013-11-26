@@ -274,7 +274,7 @@ See http://stackoverflow.com/q/20193231/151048
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='feedUrl && !items'>Loading Feed...</span>
     <span ng-hide=feedUrl><b>Please specify a feed Url.</b></span>
-    <span ng-show=items>
+    <span ng-show=items class=mark-visited>
       <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
           ng-class='{expanded: expanded}'>
         <a href='{{item.link}}'>{{item.title}}</a>
