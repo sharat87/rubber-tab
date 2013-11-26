@@ -87,9 +87,9 @@ app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.bars = $ng.fromJson localStorage.bars
 
   unless $scope.bars
-    # If there are no saved bars, add one of each bar type.
+    # If there are no saved bars, like when just installed, create a default set.
     $scope.bars = []
-    for name of registry
+    for name in <[datetime gmail facebook weather topsites news]>
       $scope.addNewBar name
 
   $scope.$watchCollection \bars, -> localStorage.bars = $ng.toJson $scope.bars
