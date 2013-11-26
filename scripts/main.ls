@@ -63,6 +63,9 @@ app.value \registry,
   news:
     title: 'Google News'
     icon: \news
+  rss:
+    title: 'RSS Ticker'
+    icon: \rss
   topsites:
     title: 'Top Sites'
     icon: \history
@@ -306,6 +309,44 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
 
   do tickNews
   $interval tickNews, 9000
+
+app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
+  store $scope,
+    items: null
+    feedUrl: null
+
+  updateNews = (news) ->
+    $scope.items = for el in news.getElementsByTagName \item
+      title: el.getElementsByTagName(\title)[0].textContent.trim()
+      link: el.getElementsByTagName(\link)[0].textContent.trim()
+
+  loadFeed = ->
+    console.log 'loadFeed', $scope.feedUrl
+    $http do
+      method: \GET
+      url: $scope.feedUrl
+      transformResponse: (data) ->
+        new DOMParser().parseFromString data, \text/xml
+    .success(updateNews).error (err) ->
+      console.log 'rss error:', $scope.feedUrl, err
+
+  var time
+  $scope.$watch \feedUrl, (value) ->
+    return unless value
+    time := Date.now!
+    $timeout ((t) -> (-> do loadFeed if t is time))(time), 800
+
+  # FIXME: Code repetition, copied from news widget.
+  $scope.activeIndex = 0
+  tick = ->
+    return if $scope.expanded or not $scope.items
+    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
+
+  $scope.toggleExpand = ->
+    $scope.expanded = not $scope.expanded
+
+  do tick
+  $interval tick, 9000
 
 app.controller \TopSitesBar, ($scope, $interval, store) ->
   store $scope,

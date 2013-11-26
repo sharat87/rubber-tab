@@ -213,8 +213,7 @@ See http://stackoverflow.com/q/20193231/151048
     <span class=btns>
       <a ng-click='toggleExpand()'>
         <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode>
-        <i class=i-cog></i></a>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
       <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
     </span>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
@@ -266,6 +265,29 @@ See http://stackoverflow.com/q/20193231/151048
         <input type=checkbox ng-model=showFavicons>
         <span>Show favicons</span>
       </label>
+    </div>
+  </div>
+</script>
+
+<script type=text/ng-template id=bars/rss.html>
+  <div ng-controller=RssBar>
+    <left-btns iref=#></left-btns>
+    <span class=dull ng-show='feedUrl && !items'>Loading Feed...</span>
+    <span ng-hide=feedUrl><b>Please specify a feed Url.</b></span>
+    <span ng-show=items>
+      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
+          ng-class='{expanded: expanded}'>
+        <a href='{{item.link}}'>{{item.title}}</a>
+      </span>
+    </span>
+    <span class=btns>
+      <a ng-click='toggleExpand()'>
+        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <label><span>Feed Url:</span> <input type=text ng-model=feedUrl></label>
     </div>
   </div>
 </script>
