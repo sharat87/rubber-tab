@@ -303,6 +303,29 @@ See http://stackoverflow.com/q/20193231/151048
   </div>
 </script>
 
+<script type=text/ng-template id=bars/subreddit.html>
+  <div ng-controller=SubRedditBar>
+    <left-btns iref=#></left-btns>
+    <span class=dull ng-show='subr && !items'>Loading Feed...</span>
+    <span ng-hide=subr><b>Please specify a subreddit name.</b></span>
+    <span ng-show=items class=mark-visited>
+      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
+          ng-class='{expanded: expanded}'>
+        <a href='{{item.link}}'>{{item.title}}</a>
+      </span>
+    </span>
+    <span class=btns>
+      <a ng-click='toggleExpand()'>
+        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
+      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    </span>
+    <div class='prefs v-scale-slide' ng-show=showPrefs>
+      <label><span>Subreddit:</span> <input type=text ng-model=subr></label>
+    </div>
+  </div>
+</script>
+
 <script type=text/ng-template id=bars/bookmarks.html>
   <div ng-controller=BookmarkBar>
     <a href=chrome://bookmarks><i class='i-bookmark-empty bullet-icon'></i></a>

@@ -72,6 +72,9 @@ app.value \registry,
   reddit:
     title: 'Reddit Inbox'
     icon: \reddit
+  subreddit:
+    title: 'Sub-reddit'
+    icon: \reddit
 
 app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.nav = $window.navigator
@@ -123,7 +126,7 @@ app.factory \placeQ, ($http, $q, $window) ->
         format: \json
         q: query
       transformResponse: (data) ->
-        data = JSON.parse(data)
+        data = $ng.fromJson data
         if data?.query.count then data.query.results.Result
     ).success((data) ->
       # console.log 'place data:', data
@@ -325,7 +328,6 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
       link: el.getElementsByTagName(\link)[0].textContent.trim()
 
   loadFeed = ->
-    console.log 'loadFeed', $scope.feedUrl
     $http do
       method: \GET
       url: $scope.feedUrl
@@ -382,6 +384,44 @@ app.controller \RedditBar, ($scope, $http, store) ->
     $scope.unreads = response.data.children.length
   .error (err) ->
     console.log 'reddit failure:', err
+
+app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
+  store $scope,
+    items: null
+    subr: null
+
+  load = ->
+    $http do
+      method: \GET
+      url: "http://www.reddit.com/r/#{$scope.subr}.json"
+      transformResponse: (data) -> $ng.fromJson(data).data.children
+    .success (news) ->
+      $scope.items = for item in news
+        title: item.data.title
+        link: item.data.url
+        comments:
+          link: item.data.permalink
+          count: item.data.num_comments
+    .error (err) ->
+      console.log 'subreddit error:', $scope.subr, err
+
+  var time
+  $scope.$watch \subr, (value) ->
+    return unless value
+    time := Date.now!
+    $timeout ((t) -> (-> do load if t is time))(time), 800
+
+  # FIXME: Code repetition, copied from news widget.
+  $scope.activeIndex = 0
+  tick = ->
+    return if $scope.expanded or not $scope.items
+    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
+
+  $scope.toggleExpand = ->
+    $scope.expanded = not $scope.expanded
+
+  do tick
+  $interval tick, 9000
 
 app.controller \AppsListCtrl, ($scope, $timeout) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
