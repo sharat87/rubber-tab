@@ -332,12 +332,13 @@ app.controller \RedditBar, ($scope, $http, store) ->
   store $scope,
     unreads: null
 
-  $http(
+  $http do
     method: \GET
     url: 'http://reddit.com/message/unread.json?mark=false&app=rtab'
-  ).success((response) ->
-    console.log 'reddit success', response
-  ).error (err) ->
+  .success (response) ->
+    # console.log 'reddit success', response
+    $scope.unreads = response.data.children.length
+  .error (err) ->
     console.log 'reddit failure:', err
 
 app.controller \AppsListCtrl, ($scope) ->

@@ -11,13 +11,7 @@
         "bookmarks",
         "geolocation",
         "topSites",
-        "chrome://favicon/",
-        "https://query.yahooapis.com/",
-        "https://mail.google.com/",
-        "https://www.facebook.com/",
-        "http://ws.geonames.org/",
-        "https://news.google.com/",
-        "https://reddit.com/"
+        "<all_urls>"
     ],
     "manifest_version": 2
 }

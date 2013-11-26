@@ -61,6 +61,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "72b1277834cba5b7944b0a6cac7ddb0d",
+      "css": "rss",
+      "code": 59425,
+      "src": "fontawesome"
+    },
+    {
       "uid": "e99461abfef3923546da8d745372c995",
       "css": "cog",
       "code": 59409,
@@ -177,7 +183,7 @@
     {
       "uid": "b3a537446285bb3510bba57d20374818",
       "css": "reddit",
-      "code": 59425,
+      "code": 59426,
       "src": "zocial"
     },
     {
