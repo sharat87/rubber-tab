@@ -57,14 +57,16 @@ select
   a
     text-decoration underline
 
-  .close-btn
+  button
     display block
     border thin solid #FFF
     border-radius 3px
     padding 6px
     width 100%
-    margin 48px 0 24px
     box-shadow 0 0 6px #FFF
+
+    &:first-of-type
+      margin 48px 0 12px
 
     &:hover, &:focus
       outline none
@@ -74,6 +76,12 @@ select
     &:active
       -webkit-transform translatey(1px)
       box-shadow none
+
+    &.reset-btn
+      &:hover, &:focus
+        background-color #F44
+        border-color #F44
+        box-shadow 0 0 6px #F44
 
 .bar
   margin 12px

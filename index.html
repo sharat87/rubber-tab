@@ -62,13 +62,13 @@ See http://stackoverflow.com/q/20193231/151048
       </ul>
     </span>
     <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
+    <a ng-click='showOptions = true'><i class=i-options></i></a>
     <a ng-click='showHelp = true'><i class=i-help></i></a>
-    <!-- <a ng-click='showOptions = true'><i class=i-options></i></a> -->
   </section>
 </nav>
 
 <div class=pop-slide ng-show=showOptions>
-  Nothing here yet, again.
+  <button class=reset-btn ng-click='reset()'>Reset!</button>
   <button class=close-btn ng-click='showOptions = false'>Close</button>
 </div>
 

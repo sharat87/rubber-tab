@@ -106,6 +106,11 @@ app.controller \AppCtrl, ($scope, $window, registry) ->
     $scope.bars[index] = $scope.bars[index + 1]
     $scope.bars[index + 1] = tmp
 
+  $scope.reset = ->
+    if confirm 'This will erase all your rubber-tab configuration and restores the defaults.\n\nSure?'
+      localStorage.clear()
+      $window.location.reload()
+
 app.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
 
