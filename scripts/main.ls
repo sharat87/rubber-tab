@@ -405,7 +405,7 @@ app.controller \AppsListCtrl, ($scope, $timeout) ->
 
     $timeout ->
       knownApps := for app in $scope.apps
-        unless app.id in knownApps
+        if knownApps.length > 0 and app.id not in knownApps
           app.isNew = yes
         app.id
       localStorage.knownApps = $ng.toJson knownApps
