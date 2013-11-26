@@ -311,9 +311,6 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
     return if $scope.expanded or not $scope.items
     $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
 
-  $scope.toggleExpand = ->
-    $scope.expanded = not $scope.expanded
-
   do tick
   $interval tick, 9000
 
@@ -521,6 +518,27 @@ app.directive \leftBtns, (registry) ->
   link: (scope, element, attrs) ->
     icon = registry[scope.bar.name].icon
     element.append "<a href='#{attrs.iref}'><i class=i-#{icon}></i></a>"
+
+app.directive \rightBtns, ->
+  restrict: \E
+  templateUrl: \right-btns.html
+  replace: yes
+  scope:
+    configurable: \@
+    expandable: \@
+
+  controller: ($scope, $element, $attrs) ->
+    $scope.remove = ->
+      $scope.$parent.removeBar $scope.$parent.bar
+
+    $scope.togglePrefs = ->
+      $scope.$parent.showPrefs = not $scope.$parent.showPrefs
+
+    $scope.toggleExpand = ->
+      $scope.$parent.expanded = not $scope.$parent.expanded
+
+  link: (scope, element, attrs) ->
+    console.info scope, element, attrs
 
 app.directive \btns, ->
   # Remove all immediate children that are text nodes. This is used on icon
