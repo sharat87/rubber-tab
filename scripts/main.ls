@@ -292,21 +292,9 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
       console.log 'news error:', err
 
   updateNews = (news) ->
-
     $scope.items = for el in news.getElementsByTagName \item
       title: el.getElementsByTagName(\title)[0].textContent.trim()
       link: el.getElementsByTagName(\link)[0].textContent.trim()
-
-    $scope.activeIndex = 0
-    $scope.activeItem = $scope.items[$scope.activeIndex]
-
-  tickNews = ->
-    return if $scope.expanded or not $scope.items
-    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
-    $scope.activeItem = $scope.items[$scope.activeIndex]
-
-  $scope.toggleExpand = ->
-    $scope.expanded = not $scope.expanded
 
   if $scope.edition
     do loadNews
@@ -315,8 +303,16 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
       $scope.edition = place.countrycode.toLowerCase()
       do loadNews
 
-  do tickNews
-  $interval tickNews, 9000
+  $scope.activeIndex = 0
+  tick = ->
+    return if $scope.expanded or not $scope.items
+    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
+
+  $scope.toggleExpand = ->
+    $scope.expanded = not $scope.expanded
+
+  do tick
+  $interval tick, 9000
 
 app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
   store $scope,
