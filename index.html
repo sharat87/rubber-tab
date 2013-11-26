@@ -136,9 +136,7 @@ See http://stackoverflow.com/q/20193231/151048
     <left-btns iref='https://gmail.com'></left-btns>
     <span class=dull ng-show='unreads == null'>Loading GMail...</span>
     <span ng-show='unreads != null'>{{unreads}} unread mails</span>
-    <span class=btns>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns></right-btns>
   </div>
 </script>
 
@@ -150,9 +148,7 @@ See http://stackoverflow.com/q/20193231/151048
       {{notifications.num_unread}} notifications and
       {{inbox.unread}} unread messages
     </span>
-    <span class=btns>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns></right-btns>
   </div>
 </script>
 
@@ -173,11 +169,7 @@ See http://stackoverflow.com/q/20193231/151048
           {{location.country}}</span>
       </span>
     </span>
-    <span class=btns>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode>
-        <i class=i-cog ng-class='{active: showPrefs}'></i></a>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns configurable></right-btns>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <label>
         <span>Units:</span>
@@ -217,12 +209,7 @@ See http://stackoverflow.com/q/20193231/151048
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
-    <span class=btns>
-      <a ng-click='toggleExpand()'>
-        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns configurable expandable></right-btns>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <strong>Google News Controls</strong>
       <label><span>Edition:</span> <input type=text ng-model=edition></label>
@@ -261,12 +248,7 @@ See http://stackoverflow.com/q/20193231/151048
         </a>
       </span>
     </span>
-    <span class=btns>
-      <a ng-click='toggleExpand()'>
-        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns configurable expandable></right-btns>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <label>
         <input type=checkbox ng-model=showFavicons>
@@ -287,12 +269,7 @@ See http://stackoverflow.com/q/20193231/151048
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
-    <span class=btns>
-      <a ng-click='toggleExpand()'>
-        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns configurable expandable></right-btns>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <label><span>Feed Url:</span> <input type=text ng-model=feedUrl></label>
     </div>
@@ -304,9 +281,7 @@ See http://stackoverflow.com/q/20193231/151048
     <left-btns iref='https://reddit.com/message/unread'></left-btns>
     <span class=dull ng-show='unreads == null'>Loading Reddit...</span>
     <span ng-show='unreads != null'>{{unreads}} unread messages</span>
-    <span class=btns>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns></right-btns>
   </div>
 </script>
 
@@ -321,12 +296,7 @@ See http://stackoverflow.com/q/20193231/151048
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
-    <span class=btns>
-      <a ng-click='toggleExpand()'>
-        <i class='{{expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-      <a ng-click='showPrefs = !showPrefs' ng-show=editMode><i class=i-cog></i></a>
-      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
-    </span>
+    <right-btns configurable expandable></right-btns>
     <div class='prefs v-scale-slide' ng-show=showPrefs>
       <label><span>Subreddit:</span> <input type=text ng-model=subr></label>
     </div>
