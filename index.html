@@ -21,9 +21,9 @@ See http://stackoverflow.com/q/20193231/151048
 </div>
 
 <div id=apps ng-controller=AppsListCtrl>
-  <span class=app-item ng-repeat='app in apps | orderBy:"name"'
-    menu-box=contextmenu>
-    <a class=app-ln href='{{app.appLaunchUrl}}' tip='{{app.name}}'>
+  <span class=app-item ng-repeat='app in apps | orderBy:"name"' menu-box=contextmenu>
+    <a class=app-ln href='{{app.appLaunchUrl}}' tip='{{app.name}}'
+      ng-class='{new: app.isNew}'>
       <img ng-src='{{app.largestIcon.url}}' width=32 height=32></a>
     <ul class='menu se'>
       <li><a href='{{app.appLaunchUrl}}'><b>{{app.name}}</b></a>

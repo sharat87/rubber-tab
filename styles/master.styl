@@ -225,28 +225,37 @@ select
 #apps
   margin 24px 12px
 
-#apps .app-item
-  position relative
-  display inline-block
+  .app-item
+    position relative
+    display inline-block
 
-#apps .app-ln
-  width 52px
-  height 52px
-  text-decoration none
-  display inline-block
-  padding 0 10px
-  border-radius 2px
-  background-color rgba(0, 0, 0, .1)
-  margin-right 12px
-  // Need absolute font size here for the icons to line vertically center.
-  font-size 24px
+  .app-ln
+    width 52px
+    height 52px
+    text-decoration none
+    display inline-block
+    padding 0 10px
+    border-radius 2px
+    background-color rgba(0, 0, 0, .1)
+    margin-right 12px
+    // Need absolute font size here for the icons to line vertically center.
+    font-size 24px
 
-#apps .app-ln:hover
-  background-color rgba(0, 0, 0, .6)
-  box-shadow 0 0 3px rgba(0, 0, 0, .9)
+    &:hover
+      background-color rgba(0, 0, 0, .6)
+      box-shadow 0 0 3px rgba(0, 0, 0, .9)
 
-#apps .app-ln img
-  vertical-align -webkit-baseline-middle
+    img
+      vertical-align -webkit-baseline-middle
+
+    &.new
+      background-color #08B
+      box-shadow 0 0 9px #08B
+      transition all 1s ease
+      -webkit-transform scale(1.2)
+
+      &:hover
+        box-shadow 0 0 48px #08B
 
 .tip
   position absolute

@@ -325,7 +325,9 @@ app.controller \TopSitesBar, ($scope, $interval, store) ->
   do tick
   $interval tick, 4000
 
-app.controller \AppsListCtrl, ($scope) ->
+app.controller \AppsListCtrl, ($scope, $timeout) ->
+  knownApps = $ng.fromJson(localStorage.knownApps) or []
+
   chrome.management.getAll (allExts) ->
 
     apps = for ext in allExts
@@ -344,11 +346,22 @@ app.controller \AppsListCtrl, ($scope) ->
     $scope.$apply ->
       $scope.apps = apps
 
+    $timeout ->
+      knownApps := for app in $scope.apps
+        unless app.id in knownApps
+          app.isNew = yes
+        app.id
+      localStorage.knownApps = $ng.toJson knownApps
+
   $scope.uninstall = (app) ->
     # TODO: Animate the disappearance of the app icon.
     chrome.management.uninstall app.id, {showConfirmDialog: yes}, ->
       unless chrome.extension.lastError
         $scope.apps.splice $scope.apps.indexOf(app), 1
+
+  $scope.$watch \apps.length, (len) ->
+    return unless len?
+    localStorage.knownApps = $ng.toJson [app.id for app in $scope.apps]
 
 app.directive \tip, ->
 
