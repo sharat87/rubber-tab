@@ -511,6 +511,34 @@ app.directive \menuBox, ($document) ->
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
 
+app.directive \ticker, ($interval) ->
+  restrict: \A
+  link: (scope, element, attrs) ->
+    element = element[0]
+    hide = (el) -> el.style.display = 'none'
+    show = (el) -> el.style.display = ''
+
+    var intervalPromise
+
+    scope.$watch \items, ->
+      if intervalPromise
+        $interval.cancel intervalPromise
+
+      return unless scope.items.length
+
+      for child in element.children
+        hide child
+
+      current = -1
+      tick = ->
+        if current >= 0
+          hide element.children[current]
+        current := 0 if ++current is element.children.length
+        show element.children[current]
+
+      do tick
+      intervalPromise := $interval tick, 9000
+
 app.directive \leftBtns, (registry) ->
   restrict: \E
   templateUrl: \left-btns.html

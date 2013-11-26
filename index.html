@@ -204,9 +204,8 @@ See http://stackoverflow.com/q/20193231/151048
   <div ng-controller=NewsBar>
     <left-btns iref='https://news.google.com'></left-btns>
     <span class=dull ng-hide=items>Loading News...</span>
-    <span ng-show=items class=mark-visited>
-      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
-          ng-class='{expanded: expanded}'>
+    <span ng-show=items class=mark-visited ticker>
+      <span ng-repeat='item in items' ng-class='{expanded: expanded}'>
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
