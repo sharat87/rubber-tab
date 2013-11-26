@@ -269,6 +269,17 @@ See http://stackoverflow.com/q/20193231/151048
   </div>
 </script>
 
+<script type=text/ng-template id=bars/reddit.html>
+  <div ng-controller=RedditBar>
+    <left-btns iref='https://reddit.com/message/unread'></left-btns>
+    <span class=dull ng-hide='unreads == null'>Loading Reddit...</span>
+    <span ng-show='unreads != null'>{{unreads}} unread messages</span>
+    <span class=btns>
+      <a ng-click='removeBar(bar)' ng-show=editMode><i class=i-trash></i></a>
+    </span>
+  </div>
+</script>
+
 <script type=text/ng-template id=bars/bookmarks.html>
   <div ng-controller=BookmarkBar>
     <a href=chrome://bookmarks><i class='i-bookmark-empty bullet-icon'></i></a>

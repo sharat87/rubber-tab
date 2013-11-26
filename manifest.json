@@ -16,7 +16,8 @@
         "https://mail.google.com/",
         "https://www.facebook.com/",
         "http://ws.geonames.org/",
-        "https://news.google.com/"
+        "https://news.google.com/",
+        "https://reddit.com/"
     ],
     "manifest_version": 2
 }
