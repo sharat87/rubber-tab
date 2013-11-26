@@ -69,6 +69,9 @@ app.value \registry,
   topsites:
     title: 'Top Sites'
     icon: \history
+  reddit:
+    title: 'Reddit Inbox'
+    icon: \reddit
 
 app.controller \AppCtrl, ($scope, $window, registry) ->
   $scope.nav = $window.navigator
@@ -365,6 +368,19 @@ app.controller \TopSitesBar, ($scope, $interval, store) ->
 
   do tick
   $interval tick, 4000
+
+app.controller \RedditBar, ($scope, $http, store) ->
+  store $scope,
+    unreads: null
+
+  $http do
+    method: \GET
+    url: 'http://reddit.com/message/unread.json?mark=false&app=rtab'
+  .success (response) ->
+    # console.log 'reddit success', response
+    $scope.unreads = response.data.children.length
+  .error (err) ->
+    console.log 'reddit failure:', err
 
 app.controller \AppsListCtrl, ($scope, $timeout) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
