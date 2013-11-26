@@ -350,9 +350,27 @@ app.controller \AppsListCtrl, ($scope) ->
       unless chrome.extension.lastError
         $scope.apps.splice $scope.apps.indexOf(app), 1
 
-app.directive \tooltip, ->
-  (scope, element, attrs) ->
-    element.after $ng.element(\<div>).addClass(\tooltip).text(attrs.tooltip)
+app.directive \tip, ->
+
+  restrict: \A
+  link: (scope, element, attrs) ->
+    tip = document.createElement \div
+    tip.className = \tip
+    document.body.appendChild tip
+
+    element.on \mouseenter, ->
+      tip.style.display = \block
+      elRect = element[0].getBoundingClientRect!
+      tipRect = tip.getBoundingClientRect!
+      $ng.extend tip.style,
+        top: (elRect.top - tipRect.height - 1) + 'px'
+        left: elRect.left + 'px'
+
+    element.on \mouseleave, ->
+      tip.style.display = ''
+
+    attrs.$observe \tip, (value) ->
+      tip.innerText = value
 
 app.directive \menuBox, ($document) ->
   openedMenu = null
