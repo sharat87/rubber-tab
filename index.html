@@ -89,13 +89,14 @@ See http://stackoverflow.com/q/20193231/151048
   - An RSS ticker.
 -->
 
+<!-- Directive uses `$parent`, only to be used under a *Bar controller -->
 <script type=text/ng-template id=left-btns.html>
   <span class=btns>
-    <span class=reorder-btns ng-show=editMode>
-      <a ng-click='moveUp(bar)' ng-show=!$first><i class=i-move-up></i></a>
-      <a ng-click='moveDown(bar)' ng-show=!$last><i class=i-move-down></i></a>
+    <span class=reorder-btns ng-show=$parent.editMode>
+      <a ng-click='moveUp()' ng-show=!$parent.$first><i class=i-move-up></i></a>
+      <a ng-click='moveDown()' ng-show=!$parent.$last><i class=i-move-down></i></a>
     </span>
-    <!-- Bar icon should be added here. -->
+    <a href='{{iref}}'><i class='i-{{icon}}'></i></a>
   </span>
 </script>
 
