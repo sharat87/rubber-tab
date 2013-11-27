@@ -515,12 +515,18 @@ app.directive \ticker, ($interval) ->
   restrict: \A
   link: (scope, element, attrs) ->
     element = element[0]
-    hide = (el) -> el.style.display = 'none'
+    hide = (el) -> el.style.display = \none
     show = (el) -> el.style.display = ''
+
+    # Find out the iterable over which the ngRepeat is working with.
+    for child in element.childNodes
+      if child.nodeType is 8 and \ngRepeat in child.nodeValue # Comment node
+        iterable = child.nodeValue.match(/ngRepeat: .+? in (.+?) /)[1]
+        break
 
     var intervalPromise
 
-    scope.$watch \items, ->
+    scope.$watch iterable, ->
       if intervalPromise
         $interval.cancel intervalPromise
 
