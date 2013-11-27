@@ -525,25 +525,25 @@ app.directive \leftBtns, (registry) ->
   templateUrl: \left-btns.html
   replace: yes
   scope: iref: \@
-  controller: ($scope, $element, $attrs) ->
-    $scope.icon = registry[$scope.$parent.bar.name].icon
-    $scope.moveUp = -> $scope.$parent.moveUp $scope.$parent.bar
-    $scope.moveDown = -> $scope.$parent.moveDown $scope.$parent.bar
+  link: (scope, element, attrs) ->
+    scope.icon = registry[scope.$parent.bar.name].icon
+    scope.moveUp = -> scope.$parent.moveUp scope.$parent.bar
+    scope.moveDown = -> scope.$parent.moveDown scope.$parent.bar
 
 app.directive \rightBtns, ->
   restrict: \E
   templateUrl: \right-btns.html
   replace: yes
   scope: configurable: \@ expandable: \@
-  controller: ($scope, $element, $attrs) ->
-    $scope.remove = ->
-      $scope.$parent.removeBar $scope.$parent.bar
+  link: (scope, element, attrs) ->
+    scope.remove = ->
+      scope.$parent.removeBar scope.$parent.bar
 
-    $scope.togglePrefs = ->
-      $scope.$parent.showPrefs = not $scope.$parent.showPrefs
+    scope.togglePrefs = ->
+      scope.$parent.showPrefs = not scope.$parent.showPrefs
 
-    $scope.toggleExpand = ->
-      $scope.$parent.expanded = not $scope.$parent.expanded
+    scope.toggleExpand = ->
+      scope.$parent.expanded = not scope.$parent.expanded
 
 app.directive \btns, ->
   # Remove all immediate children that are text nodes. This is used on icon
