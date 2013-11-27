@@ -134,19 +134,21 @@ select
     .mark-visited a:visited
       color #888
 
-    &[ng-controller='NewsBar'] .expanded,
-    &[ng-controller='RssBar'] .expanded,
-    &[ng-controller='SubRedditBar'] .expanded
-      display block
+    &[ng-controller='NewsBar'],
+    &[ng-controller='RssBar'],
+    &[ng-controller='SubRedditBar']
 
-      &:before
-        content '∘'
-        opacity .7
+      .expanded > *
+        display block
 
-      &:last-child
-        margin-bottom 12px
+        &:before
+          content '∘'
+          opacity .7
 
-    &[ng-controller='TopSitesBar'] .expanded
+        &:last-child
+          margin-bottom 12px
+
+    &[ng-controller='TopSitesBar'] .expanded > *
       display block
       margin 6px 0
 

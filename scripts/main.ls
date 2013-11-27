@@ -475,7 +475,7 @@ app.directive \menuBox, ($document) ->
       if child.tagName in <[A BUTTON]>
         child.addEventListener evt, handler
 
-app.directive \ticker, ($interval) ->
+app.directive \tick, ($interval) ->
   # Value of the ticker attribute, if any is the delay between each tick (in
   # ms). Defaults to 9000.
   restrict: \A
@@ -510,10 +510,10 @@ app.directive \ticker, ($interval) ->
         show tickerEl.children[current]
 
       do tick
-      intervalPromise := $interval tick, (attrs.ticker or 9000)
+      intervalPromise := $interval tick, (attrs.tick or 9000)
 
     scope.$watch \expanded, (val) !->
-      isExpanded := val
+      tickerEl.classList[if isExpanded := val then \add else \remove] \expanded
       for child in tickerEl.children
         if val or child is tickerEl.children[current]
           show child
