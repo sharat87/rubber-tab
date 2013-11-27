@@ -516,17 +516,17 @@ app.directive \ticker, ($interval) ->
   # ms). Defaults to 9000.
   restrict: \A
   link: (scope, element, attrs) ->
-    element = element[0]
+    tickerEl = element[0]
     hide = (el) -> el.style.display = \none
     show = (el) -> el.style.display = ''
 
     # Find out the iterable over which the ngRepeat is working with.
-    for child in element.childNodes
+    for child in tickerEl.childNodes
       if child.nodeType is 8 and child.nodeValue.indexOf(\ngRepeat) >= 0 # Comment node
         iterable = child.nodeValue.match(/ngRepeat: .+? in (.+?) /)[1]
         break
 
-    var intervalPromise
+    var intervalPromise, isExpanded
 
     scope.$watch iterable, ->
       if intervalPromise
@@ -534,18 +534,24 @@ app.directive \ticker, ($interval) ->
 
       return unless scope.items.length
 
-      for child in element.children
+      for child in tickerEl.children
         hide child
 
       current = -1
       tick = ->
+        return if isExpanded
         if current >= 0
-          hide element.children[current]
-        current := 0 if ++current is element.children.length
-        show element.children[current]
+          hide tickerEl.children[current]
+        current := 0 if ++current is tickerEl.children.length
+        show tickerEl.children[current]
 
       do tick
       intervalPromise := $interval tick, (attrs.ticker or 9000)
+
+    scope.$watch \expanded, (val) !->
+      if isExpanded := val
+        for child in tickerEl.children
+          show child
 
 app.directive \leftBtns, (registry) ->
   restrict: \E
