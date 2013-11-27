@@ -62,8 +62,10 @@ See http://stackoverflow.com/q/20193231/151048
       </ul>
     </span>
     <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
-    <a ng-click='showOptions = true'><i class=i-options></i></a>
-    <a ng-click='showHelp = true'><i class=i-help></i></a>
+    <a ng-click='showOptions = !showOptions' ng-class='{active: showOptions}'>
+      <i class=i-options></i></a>
+    <a ng-click='showHelp = !showHelp' ng-class='{active: showHelp}'>
+      <i class=i-help></i></a>
   </section>
 </nav>
 
@@ -75,9 +77,22 @@ See http://stackoverflow.com/q/20193231/151048
 <div class=pop-slide ng-show=showHelp ng-cloak>
   <h1>Rubber tab!</h1>
   <p>Hello there! Thank you for trying out Rubber tab.</p>
+  <h2>About</h2>
   <p>Rubber tab is open source, released with the
     <a href='http://mitl.sharats.me'>MIT license</a>. You can find the source
     code on the <a href='https://github.com/sharat87/rubber-tab'>github project</a>.</p>
+  <h2>Credits</h2>
+  <p>Rubber tab makes use of quite a few free/open source efforts. Without the
+    following, Rubber tab may not have existed. So thank you to,</p>
+  <ul>
+    <li><a href='http://angularjs.org'>AngularJS</a> &ndash; for making it fun
+      again to build javascript apps.
+    <li><a href='http://fontello.com'>Fontello</a> &ndash; for providing such a
+      fantastic service of aggregating icon fonts.
+    <li><a href=>Knew Tab</a> &ndash; for the initial idea/inspiration of the
+      layout.
+    <li><b>You!</b> &ndash; for using Rubber tab :).
+  </ul>
   <button class=close-btn ng-click='showHelp = false'>Close</button>
 </div>
 

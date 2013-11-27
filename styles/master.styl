@@ -16,7 +16,6 @@ b
 
 button
   font inherit
-  font-size .8em
   cursor pointer
   background-color transparent
   color white
@@ -53,12 +52,13 @@ select
 
 .pop-slide
   position absolute
-  height 100%
+  height calc(100% - 37px)
+  overflow-y auto
   top 0
   right 0
   width 420px
   padding 12px
-  background-color rgba(0, 0, 0, .7)
+  background-color rgba(0, 0, 0, .8)
   box-shadow 0 0 20px rgba(0, 0, 0, .8)
 
   label
@@ -137,13 +137,8 @@ select
           i:before
             background-color rgba(0, 0, 0, .6)
 
-    .ok-btn
-      color rgb(170, 255, 170)
-      opacity .7
-
-    .cancel-btn
-      color rgb(255, 150, 150)
-      opacity .7
+    button
+      font-size .8em
 
     .mark-visited a:visited
       color #888
