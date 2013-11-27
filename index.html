@@ -103,11 +103,11 @@ See http://stackoverflow.com/q/20193231/151048
 <!-- Directive uses `$parent`, only to be used under a *Bar controller -->
 <script type=text/ng-template id=right-btns.html>
   <span class=btns>
-    <a ng-click='togglePrefs()' ng-show='configurable != null && $parent.editMode'>
-      <i class=i-cog ng-class='{active: $parent.showPrefs}'></i></a>
-    <a ng-click='toggleExpand()' ng-show='expandable != null'>
-      <i class='{{$parent.expanded ? "i-up-open" : "i-down-open"}}'></i></a>
-    <a ng-click='remove()' ng-show=$parent.editMode><i class=i-trash></i></a>
+  <a ng-click='togglePrefs()' ng-show='configurable != null && $parent.editMode'
+    ng-class='{active: $parent.showPrefs}'><i class=i-cog></i></a>
+  <a ng-click='toggleExpand()' ng-show='expandable != null'>
+    <i class='{{$parent.expanded ? "i-up-open" : "i-down-open"}}'></i></a>
+  <a ng-click='remove()' ng-show=$parent.editMode><i class=i-trash></i></a>
   </span>
 </script>
 
