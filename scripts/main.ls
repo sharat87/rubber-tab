@@ -491,17 +491,17 @@ app.directive \ticker, ($interval) ->
         break
 
     var intervalPromise, isExpanded
+    current = -1
 
     scope.$watch iterable, ->
       if intervalPromise
         $interval.cancel intervalPromise
 
-      return unless scope.items.length
+      return unless scope[iterable]?.length
 
       for child in tickerEl.children
         hide child
 
-      current = -1
       tick = ->
         return if isExpanded
         if current >= 0
@@ -513,9 +513,12 @@ app.directive \ticker, ($interval) ->
       intervalPromise := $interval tick, (attrs.ticker or 9000)
 
     scope.$watch \expanded, (val) !->
-      if isExpanded := val
-        for child in tickerEl.children
+      isExpanded := val
+      for child in tickerEl.children
+        if val or child is tickerEl.children[current]
           show child
+        else
+          hide child
 
 app.directive \leftBtns, (registry) ->
   restrict: \E
