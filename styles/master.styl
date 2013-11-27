@@ -106,6 +106,13 @@ select
       padding 0 12px
       width 100%
       display table-cell
+      white-space nowrap
+      overflow hidden
+
+      // I don't really understand this, but it seems to fix overflow of text in
+      // bars. The 300 is calculated to be a bit more than the total width of
+      // the maximum no. of bar-buttons, which is 5*52 = 260.
+      max-width 300px
 
       &.btns
         padding 0
