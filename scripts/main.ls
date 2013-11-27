@@ -512,6 +512,8 @@ app.directive \menuBox, ($document) ->
         child.addEventListener evt, handler
 
 app.directive \ticker, ($interval) ->
+  # Value of the ticker attribute, if any is the delay between each tick (in
+  # ms). Defaults to 9000.
   restrict: \A
   link: (scope, element, attrs) ->
     element = element[0]
@@ -520,7 +522,7 @@ app.directive \ticker, ($interval) ->
 
     # Find out the iterable over which the ngRepeat is working with.
     for child in element.childNodes
-      if child.nodeType is 8 and \ngRepeat in child.nodeValue # Comment node
+      if child.nodeType is 8 and child.nodeValue.indexOf(\ngRepeat) >= 0 # Comment node
         iterable = child.nodeValue.match(/ngRepeat: .+? in (.+?) /)[1]
         break
 
@@ -543,7 +545,7 @@ app.directive \ticker, ($interval) ->
         show element.children[current]
 
       do tick
-      intervalPromise := $interval tick, 9000
+      intervalPromise := $interval tick, (attrs.ticker or 9000)
 
 app.directive \leftBtns, (registry) ->
   restrict: \E
