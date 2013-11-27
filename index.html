@@ -239,9 +239,8 @@ See http://stackoverflow.com/q/20193231/151048
   <div ng-controller=TopSitesBar>
     <left-btns iref='chrome://history'></left-btns>
     <span class=dull ng-hide=items>Loading your most visited sites...</span>
-    <span ng-show=items>
-      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
-          ng-class='{expanded: expanded}'>
+    <span ng-show=items ticker=4000>
+      <span ng-repeat='item in items' ng-class='{expanded: expanded}'>
         <a href='{{item.url}}'>
           <img ng-src='chrome://favicon/{{item.url}}' ng-show='expanded || showFavicons'>
           {{item.title}} <span class=dull>{{item.url}}</span>
@@ -263,9 +262,8 @@ See http://stackoverflow.com/q/20193231/151048
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='feedUrl && !items'>Loading Feed...</span>
     <span ng-hide=feedUrl><b>Please specify a feed Url.</b></span>
-    <span ng-show=items class=mark-visited>
-      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
-          ng-class='{expanded: expanded}'>
+    <span ng-show=items class=mark-visited ticker>
+      <span ng-repeat='item in items' ng-class='{expanded: expanded}'>
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>
@@ -290,9 +288,8 @@ See http://stackoverflow.com/q/20193231/151048
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='subr && !items'>Loading Feed...</span>
     <span ng-hide=subr><b>Please specify a subreddit name.</b></span>
-    <span ng-show=items class=mark-visited>
-      <span ng-repeat='item in items' ng-show='expanded || activeIndex === $index'
-          ng-class='{expanded: expanded}'>
+    <span ng-show=items class=mark-visited ticker>
+      <span ng-repeat='item in items' ng-class='{expanded: expanded}'>
         <a href='{{item.link}}'>{{item.title}}</a>
       </span>
     </span>

@@ -339,35 +339,11 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
     time := Date.now!
     $timeout ((t) -> (-> do loadFeed if t is time))(time), 800
 
-  # FIXME: Code repetition, copied from news widget.
-  $scope.activeIndex = 0
-  tick = ->
-    return if $scope.expanded or not $scope.items
-    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
-
-  $scope.toggleExpand = ->
-    $scope.expanded = not $scope.expanded
-
-  do tick
-  $interval tick, 9000
-
 app.controller \TopSitesBar, ($scope, $interval, store) ->
   store $scope,
     showFavicons: yes
 
   chrome.topSites.get (items) -> console.log($scope.items = items)
-
-  # FIXME: Code repetition, copied from news widget.
-  $scope.activeIndex = 0
-  tick = ->
-    return if $scope.expanded or not $scope.items
-    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
-
-  $scope.toggleExpand = ->
-    $scope.expanded = not $scope.expanded
-
-  do tick
-  $interval tick, 4000
 
 app.controller \RedditBar, ($scope, $http, store) ->
   store $scope,
@@ -407,18 +383,6 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
     return unless value
     time := Date.now!
     $timeout ((t) -> (-> do load if t is time))(time), 800
-
-  # FIXME: Code repetition, copied from news widget.
-  $scope.activeIndex = 0
-  tick = ->
-    return if $scope.expanded or not $scope.items
-    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
-
-  $scope.toggleExpand = ->
-    $scope.expanded = not $scope.expanded
-
-  do tick
-  $interval tick, 9000
 
 app.controller \AppsListCtrl, ($scope, $timeout) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
