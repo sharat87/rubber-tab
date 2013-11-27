@@ -261,7 +261,14 @@ See http://stackoverflow.com/q/20193231/151048
   <div ng-controller=RssBar>
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='feedUrl && !items'>Loading Feed...</span>
-    <span ng-hide=feedUrl><b>Please specify a feed Url.</b></span>
+    <span ng-hide=feedUrl>
+      <label>
+        <span>Feed URL:</span>
+        <input ng-model=newFeedUrl>
+      </label>
+      <!-- Need a form submit style event to trigger this function instead -->
+      <button ng-click='setupNewFeed()'>Done</button>
+    </span>
     <span ng-show=items class=mark-visited tick>
       <span ng-repeat='item in items'>
         <a href='{{item.link}}'>{{item.title}}</a>

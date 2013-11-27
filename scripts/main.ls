@@ -319,6 +319,9 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
     items: null
     feedUrl: null
 
+  $scope.setupNewFeed = ->
+    $scope.feedUrl = $scope.newFeedUrl
+
   updateNews = (news) ->
     $scope.items = for el in news.getElementsByTagName \item
       title: el.getElementsByTagName(\title)[0].textContent.trim()
