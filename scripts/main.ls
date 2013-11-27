@@ -448,17 +448,23 @@ app.directive \menuBox, ($document) ->
   openedMenu = null
 
   close = ->
-    openedMenu.removeClass \menu-open if openedMenu
+    return unless openedMenu
+    openedMenu.classList.remove \menu-open
+    for child in openedMenu.children
+      child.classList.remove \active
     openedMenu := null
 
   open = (element) ->
     do close
-    openedMenu := element.addClass \menu-open
+    (openedMenu := element).classList.add \menu-open
+    for child in element.children
+      child.classList.add \active
 
   $document.on(\click, close).on \keydown, (e) ->
     do close if e.which is 27 # ESC
 
   (scope, element, attrs) ->
+    element = element[0]
     evt = attrs.menuBox or \click
 
     handler = (e) ->
@@ -471,8 +477,8 @@ app.directive \menuBox, ($document) ->
         do e.stopPropagation
       open element
 
-    for child in element[0].children
-      if child.tagName in <[A BUTTON]>
+    for child in element.children
+      if child.tagName is \A
         child.addEventListener evt, handler
 
 app.directive \tick, ($interval) ->
