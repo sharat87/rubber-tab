@@ -62,19 +62,19 @@ See http://stackoverflow.com/q/20193231/151048
       </ul>
     </span>
     <a href='https://chrome.google.com/webstore'><i class=i-webstore></i></a>
-    <a ng-click='showOptions = !showOptions' ng-class='{active: showOptions}'>
-      <i class=i-options></i></a>
-    <a ng-click='showHelp = !showHelp' ng-class='{active: showHelp}'>
-      <i class=i-help></i></a>
+    <a ng-click='showPop = showPop == "options" ? null : "options"'
+      ng-class='{active: showPop == "options"}'><i class=i-options></i></a>
+    <a ng-click='showPop = showPop == "help" ? null : "help"'
+      ng-class='{active: showPop == "help"}'><i class=i-help></i></a>
   </section>
 </nav>
 
-<div class=pop-slide ng-show=showOptions ng-cloak>
+<div class=pop-slide ng-show='showPop == "options"' ng-cloak>
   <button class=reset-btn ng-click='reset()'>Reset!</button>
-  <button class=close-btn ng-click='showOptions = false'>Close</button>
+  <button class=close-btn ng-click='showPop = null'>Close</button>
 </div>
 
-<div class=pop-slide ng-show=showHelp ng-cloak>
+<div class=pop-slide ng-show='showPop == "help"' ng-cloak>
   <h1>Rubber tab!</h1>
   <p>Hello there! Thank you for trying out Rubber tab.</p>
   <h2>About</h2>
@@ -93,7 +93,7 @@ See http://stackoverflow.com/q/20193231/151048
       layout.
     <li><b>You!</b> &ndash; for using Rubber tab :).
   </ul>
-  <button class=close-btn ng-click='showHelp = false'>Close</button>
+  <button class=close-btn ng-click='showPop = null'>Close</button>
 </div>
 
 <!-- Bar ideas
