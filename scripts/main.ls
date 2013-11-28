@@ -306,14 +306,6 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
       $scope.edition = place.countrycode.toLowerCase()
       do loadNews
 
-  $scope.activeIndex = 0
-  tick = ->
-    return if $scope.expanded or not $scope.items
-    $scope.activeIndex = ($scope.activeIndex + 1) % $scope.items.length
-
-  do tick
-  $interval tick, 9000
-
 app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
   store $scope,
     items: null
