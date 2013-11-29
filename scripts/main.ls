@@ -395,6 +395,7 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
         else if icon.size > ext.largestIcon.size
           ext.largestIcon = icon
 
+      ext.manageUrl = "chrome://extensions/?id=#{ext.id}"
       ext
 
     $scope.$apply ->

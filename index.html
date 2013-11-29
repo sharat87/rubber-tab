@@ -30,7 +30,7 @@ See http://stackoverflow.com/q/20193231/151048
       <li><a href='{{app.homepageUrl}}'><i class=i-link-ext></i> View in Web Store</a>
       <li ng-if=app.optionsUrl>
         <a href='{{app.optionsUrl}}'><i class=i-cog-alt></i> Options</a>
-      <li><a href='chrome://extensions/?id={{app.id}}'><i class=i-extension></i> Manage</a>
+      <li><a href='{{app.manageUrl}}'><i class=i-extension></i> Manage</a>
       <li><a tabindex=0 ng-click='uninstall(app)'><i class=i-cancel></i> Uninstall app</a>
     </ul>
   </span>
