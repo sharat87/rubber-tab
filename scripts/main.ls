@@ -379,7 +379,7 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
     time := Date.now!
     $timeout ((t) -> (-> do load if t is time))(time), 800
 
-app.controller \AppsListCtrl, ($scope, $timeout) ->
+app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
 
   chrome.management.getAll (allExts) ->
@@ -412,6 +412,10 @@ app.controller \AppsListCtrl, ($scope, $timeout) ->
     chrome.management.uninstall app.id, {showConfirmDialog: yes}, ->
       unless chrome.extension.lastError
         $scope.apps.splice $scope.apps.indexOf(app), 1
+
+  $scope.launch = (app) ->
+    return if app.appLaunchUrl
+    chrome.management.launchApp app.id, -> do $window.close
 
   $scope.$watch \apps.length, (len) ->
     return unless len?
