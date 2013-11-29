@@ -22,12 +22,15 @@ app.directive \href, ->
       element.on \click, -> chrome.tabs.update url: attrs.href
 
 app.factory \store, ->
-  # A caching abstraction, based on localStorage
-  (scope, defaults) ->
-    # The `bar` object is assumed to be present on the scope. It will be
-    # present, as long as its the scope of a bar controller handled by AppCtrl
-    # in the bar lising `ng-repeat` directive.
-    ns = "store:#{scope.bar.id}:#{scope.bar.name}"
+  # A caching/storage abstraction, based on localStorage
+  (scope, ns, defaults) ->
+    if arguments.length is 2
+      defaults = ns
+      # If no `ns` is given, the caller is assumed to be a bar and as such, a
+      # `bar` object is assumed to be present on the scope. This will be the
+      # case, as long as it is indeed the scope of a bar controller handled by
+      # AppCtrl in the bar lising `ng-repeat` directive.
+      ns = "store:#{scope.bar.id}:#{scope.bar.name}"
 
     $ng.extend scope, defaults, $ng.fromJson(localStorage[ns])
 
@@ -76,7 +79,10 @@ app.value \registry,
     title: 'Sub-reddit'
     icon: \reddit
 
-app.controller \AppCtrl, ($scope, $window, registry) ->
+app.controller \AppCtrl, ($scope, $window, store, registry) ->
+  store $scope, \options,
+    fontFamily: ''
+
   $scope.nav = $window.navigator
   $scope.registry = registry
 
