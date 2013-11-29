@@ -253,6 +253,14 @@ select
     position relative
     display inline-block
 
+    &.ng-leave
+      transition all .7s ease
+      width 52px
+      &.ng-leave-active
+        width 0
+        margin-right 0
+        opacity 0
+
   .app-ln
     width 52px
     height 52px
