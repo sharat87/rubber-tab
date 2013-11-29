@@ -12,7 +12,7 @@ app.run ->
 
 app.config ($compileProvider) ->
   $compileProvider.imgSrcSanitizationWhitelist /^(https?|chrome):/
-  $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome-extension):/
+  $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome(-extension)?):/
 
 app.directive \href, ->
   # Fix anchor tags that link to chrome internal pages. Chrome stops them from
