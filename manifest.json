@@ -1,8 +1,8 @@
 {
-    "name": "Rubber tab",
+    "name": "Rubber New Tab",
     "version": "0.3.1",
     "description": "A rubbery simple start page inspired by Knew Tab and Humble New Tab Page",
-    "homepage_url": "http://sharats.me",
+    "homepage_url": "https://github.com/sharat87/rubber-tab",
     "icons": {"128": "icons/icon-128.png", "48": "icons/icon-48.png"},
     "chrome_url_overrides": {"newtab": "index.html"},
     "offline_enabled": true,
