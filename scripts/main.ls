@@ -385,9 +385,9 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
   chrome.management.getAll (allExts) ->
 
     apps = for ext in allExts
-      continue if not ext.enabled or ext.type is \extension or ext.type is \theme
-      ext.largestIcon = ext.icons[0]
+      continue if ext.type in <[extension theme]> or not ext.enabled
 
+      ext.largestIcon = ext.icons[0]
       for icon in ext.icons
         if icon.size is 48
           ext.largestIcon = icon
