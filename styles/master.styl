@@ -278,7 +278,6 @@ select
     &.new
       background-color #08B
       box-shadow 0 0 9px #08B
-      // transition -webkit-transform .5s ease, background-color 1s ease, box-shadow 1s ease
       -webkit-transform scale(1.1)
 
       &:hover
@@ -295,6 +294,14 @@ select
         border-radius 6px 0
         right 0
         bottom 0
+
+    &.new-add
+      transition all .7s cubic-bezier(0.175, 0.885, 0.32, 1.5) // easeOutBack
+      -webkit-transform scale(.1)
+      box-shadow 0 0 0 #08B
+      &.new-add-active
+        -webkit-transform scale(1.1)
+        box-shadow 0 0 0 #08B
 
 .tip
   position absolute

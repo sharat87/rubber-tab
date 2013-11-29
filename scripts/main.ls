@@ -417,8 +417,8 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
     return unless isListedApp app
     $scope.$apply ->
       build app
-      app.isNew = yes
       $scope.apps.push app
+      $timeout -> app.isNew = yes
 
   $scope.uninstall = (app) ->
     # TODO: Animate the disappearance of the app icon.
