@@ -382,21 +382,26 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
 app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
 
+  isListedApp = (ext) ->
+    ext.enabled and ext.type not in <[extension theme]>
+
+  build = (app) ->
+    app.largestIcon = app.icons[0]
+    for icon in app.icons
+      if icon.size is 48
+        app.largestIcon = icon
+        break
+      else if icon.size > app.largestIcon.size
+        app.largestIcon = icon
+
+    app.manageUrl = "chrome://extensions/?id=#{app.id}"
+
   chrome.management.getAll (allExts) ->
 
-    apps = for ext in allExts
-      continue if ext.type in <[extension theme]> or not ext.enabled
-
-      ext.largestIcon = ext.icons[0]
-      for icon in ext.icons
-        if icon.size is 48
-          ext.largestIcon = icon
-          break
-        else if icon.size > ext.largestIcon.size
-          ext.largestIcon = icon
-
-      ext.manageUrl = "chrome://extensions/?id=#{ext.id}"
-      ext
+    apps = for app in allExts
+      if isListedApp app
+        build app
+        app
 
     $scope.$apply ->
       $scope.apps = apps
@@ -407,6 +412,13 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window) ->
           app.isNew = yes
         app.id
       localStorage.knownApps = $ng.toJson knownApps
+
+  chrome.management.onInstalled.addListener (app) ->
+    return unless isListedApp app
+    $scope.$apply ->
+      build app
+      app.isNew = yes
+      $scope.apps.push app
 
   $scope.uninstall = (app) ->
     # TODO: Animate the disappearance of the app icon.
