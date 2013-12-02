@@ -375,9 +375,9 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
     .success (news) ->
       $scope.items = for item in news
         title: item.data.title
-        link: item.data.url
+        url: item.data.url
         comments:
-          link: item.data.permalink
+          url: 'http://reddit.com' + item.data.permalink
           count: item.data.num_comments
     .error (err) ->
       console.log 'subreddit error:', $scope.subr, err

@@ -322,7 +322,8 @@ See http://stackoverflow.com/q/20193231/151048
     </form>
     <span ng-show=items class=mark-visited tick>
       <span ng-repeat='item in items'>
-        <a href='{{item.link}}'>{{item.title}}</a>
+        <a href='{{item.comments.url}}' class='i-comment comments'>{{item.comments.count}}</a>
+        <a href='{{item.url}}'>{{item.title}}</a>
       </span>
     </span>
     <right-btns configurable expandable></right-btns>
