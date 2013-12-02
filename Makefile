@@ -13,8 +13,7 @@ build-scripts:
 	lsc --bare --compile --output scripts scripts/*.ls
 
 watch:
-	${MAKE} build
-	ls styles/*.styl scripts/*.ls | entr ${MAKE} build
+	ls styles/*.styl scripts/*.ls | entr -r ${MAKE} build
 
 package:
 	rm -f chrome-ext.zip
