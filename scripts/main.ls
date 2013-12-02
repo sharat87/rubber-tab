@@ -328,7 +328,7 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
   loadFeed = ->
     $http do
       method: \GET
-      url: $scope.feedUrl
+      url: if '://' in $scope.feedUrl then $scope.feedUrl else "http://#{$scope.feedUrl}"
       transformResponse: (data) ->
         new DOMParser().parseFromString data, \text/xml
     .success(updateNews).error (err) ->
