@@ -108,7 +108,7 @@ select
     a
       display inline-block
 
-    > span
+    > span, > .content
       padding 0 12px
       width 100%
       display table-cell
@@ -120,22 +120,22 @@ select
       // the maximum no. of bar-buttons, which is 5*52 = 260.
       max-width 300px
 
-      &.btns
-        padding 0
-        width auto
-        white-space nowrap
+    > span.btns
+      padding 0
+      width auto
+      white-space nowrap
 
+      i:before
+        background-color rgba(0, 0, 0, .2)
+        width 52px
+        line-height 52px
+
+      .reorder-btns i:before
+        width 24px
+
+      a:hover, a.active
         i:before
-          background-color rgba(0, 0, 0, .2)
-          width 52px
-          line-height 52px
-
-        .reorder-btns i:before
-          width 24px
-
-        a:hover, a.active
-          i:before
-            background-color rgba(0, 0, 0, .6)
+          background-color rgba(0, 0, 0, .6)
 
     button
       font-size .8em
