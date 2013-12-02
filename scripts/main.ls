@@ -317,7 +317,7 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
     items: null
     feedUrl: null
 
-  $scope.setupNewFeed = ->
+  $scope.setup = ->
     $scope.feedUrl = $scope.newFeedUrl
 
   updateNews = (news) ->
@@ -363,6 +363,9 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
   store $scope,
     items: null
     subr: null
+
+  $scope.setup = ->
+    $scope.subr = $scope.newSubr
 
   load = ->
     $http do

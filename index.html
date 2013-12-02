@@ -281,7 +281,7 @@ See http://stackoverflow.com/q/20193231/151048
   <div ng-controller=RssBar>
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='feedUrl && !items'>Loading Feed...</span>
-    <form ng-hide=feedUrl ng-submit='setupNewFeed()' class=content>
+    <form ng-hide=feedUrl ng-submit='setup()' class=content>
       <label>
         <span>Feed URL:</span>
         <input ng-model=newFeedUrl>
@@ -313,7 +313,13 @@ See http://stackoverflow.com/q/20193231/151048
   <div ng-controller=SubRedditBar>
     <left-btns iref=#></left-btns>
     <span class=dull ng-show='subr && !items'>Loading Feed...</span>
-    <span ng-hide=subr><b>Please specify a subreddit name.</b></span>
+    <form ng-hide=subr ng-submit='setup()' class=content>
+      <label>
+        <span>Subreddit to use:</span>
+        <input ng-model=newSubr>
+      </label>
+      <button>Done</button>
+    </form>
     <span ng-show=items class=mark-visited tick>
       <span ng-repeat='item in items'>
         <a href='{{item.link}}'>{{item.title}}</a>
