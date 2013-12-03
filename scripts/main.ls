@@ -391,10 +391,16 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
 app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
 
-  isListedApp = (ext) ->
-    ext.enabled and ext.type not in <[extension theme]>
-
   build = (app) ->
+    if app.type in <[extension theme]>
+      return null
+
+    if not app.enabled and app.disabledReason is \permissions_increase
+      app.permInc = yes
+
+    else unless app.enabled
+      return null
+
     app.largestIcon = app.icons[0]
     for icon in app.icons
       if icon.size is 48
@@ -405,13 +411,16 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
 
     if app.isDev = app.installType is \development
       app.name += ' (Dev)'
+
+    unless app.enabled
+      app.name += ' (Disabled)'
+
     app.manageUrl = "chrome://extensions/?id=#{app.id}"
 
   chrome.management.getAll (allExts) ->
 
     apps = for app in allExts
-      if isListedApp app
-        build app
+      if build app
         app
 
     $scope.$apply ->
@@ -425,9 +434,8 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
       localStorage.knownApps = $ng.toJson knownApps
 
   chrome.management.onInstalled.addListener (app) ->
-    return unless isListedApp app
+    return unless build app
     $scope.$apply ->
-      build app
       $scope.apps.push app
       $timeout -> app.isNew = yes
 

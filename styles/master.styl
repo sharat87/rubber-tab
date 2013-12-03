@@ -330,6 +330,12 @@ select
       top (@width/2)
       right (@margin-right + @width/2)
 
+    &.permInc
+      border-bottom thin solid red
+
+      img
+        -webkit-filter grayscale(100%) brightness(60%)
+
 .tip
   position absolute
   background-color rgba(0, 0, 0, .8)
