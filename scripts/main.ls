@@ -403,6 +403,8 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
       else if icon.size > app.largestIcon.size
         app.largestIcon = icon
 
+    if app.isDev = app.installType is \development
+      app.name += ' (Dev)'
     app.manageUrl = "chrome://extensions/?id=#{app.id}"
 
   chrome.management.getAll (allExts) ->
