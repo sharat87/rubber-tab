@@ -336,6 +336,17 @@ select
       img
         -webkit-filter grayscale(100%) brightness(60%)
 
+  &.offline .noOffline
+    -webkit-filter grayscale(100%)
+    -webkit-transform scale(.8)
+
+    &:after
+      right 3px
+
+    &:hover
+      background-color rgba(0, 0, 0, .3)
+      box-shadow 0 0 3px rgba(0, 0, 0, .3)
+
 .tip
   position absolute
   background-color rgba(0, 0, 0, .8)
