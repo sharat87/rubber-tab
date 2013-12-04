@@ -16,11 +16,11 @@ watch:
 	ls styles/*.styl scripts/*.ls | entr -r ${MAKE} build
 
 package:
-	rm -f chrome-ext.zip
+	rm -f rubber-tab.zip
 	mkdir pkg
 	ls | grep -vF pkg | xargs cp -rt pkg
 	rm pkg/scripts/*.ls pkg/styles/*.styl pkg/Makefile
-	cd pkg; zip -r ../chrome-ext.zip * > /dev/null
+	cd pkg; zip -r ../rubber-tab.zip * > /dev/null
 	rm -r pkg
 
 open-fontello:

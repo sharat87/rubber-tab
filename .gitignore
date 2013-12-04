@@ -3,4 +3,4 @@ fontello/*
 !fontello/config.json
 scripts/*.js
 styles/*.css
-chrome-ext.zip
+rubber-tab.zip
