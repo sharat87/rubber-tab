@@ -20,6 +20,7 @@ package:
 	mkdir pkg
 	ls | grep -vF pkg | xargs cp -rt pkg
 	rm pkg/scripts/*.ls pkg/styles/*.styl pkg/Makefile
+	find pkg -name '*.js' | xargs -I% uglifyjs --screw-ie8 -o % %
 	cd pkg; zip -r ../rubber-tab.zip * > /dev/null
 	rm -r pkg
 
