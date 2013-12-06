@@ -24,7 +24,7 @@ build-scripts:
 	@${LSC} --bare --compile --output scripts scripts/*.ls
 
 watch:
-	ls styles/**/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
+	ls styles/*.styl styles/themes/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
 
 package: build
 	rm -f rubber-tab.zip
