@@ -1,6 +1,7 @@
 .fontello
-fontello/*
+fontello
 !fontello/config.json
 scripts/*.js
 styles/*.css
 rubber-tab.zip
+node_modules

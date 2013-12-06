@@ -1,34 +1,37 @@
-# Dependencies: npm install -g LiveScript stylus uglify-js
-
 SHELL = /bin/bash
 .PHONY: build build-styles build-scripts watch package open-fontello save-fontello
 
 FONTELLO_HOST = http://fontello.com
 CURL = curl --silent --show-error --fail
+BROWSER = x-www-browser
+
+LSC = ./node_modules/LiveScript/bin/lsc
+STYLUS = ./node_modules/stylus/bin/stylus
+UGLIFYJS = ./node_modules/uglify-js/bin/uglifyjs --screw-ie8
+ENTR = entr
 
 build: build-styles build-scripts
 
 build-styles:
-	stylus styles
+	${STYLUS} styles
 
 build-scripts:
-	lsc --bare --compile --output scripts scripts/*.ls
+	${LSC} --bare --compile --output scripts scripts/*.ls
 
 watch:
-	ls styles/*.styl scripts/*.ls | entr -r ${MAKE} build
+	ls styles/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
 
-package:
+package: build
 	rm -f rubber-tab.zip
 	mkdir pkg
-	ls | grep -vF pkg | xargs cp -rt pkg
-	rm pkg/scripts/*.ls pkg/styles/*.styl pkg/Makefile
-	find pkg -name '*.js' | xargs -I% uglifyjs --screw-ie8 -o % %
+	cp -rt pkg fontello icons index.html manifest.json scripts styles vendor
+	find pkg -name '*.js' | xargs -I% ${UGLIFYJS} -o % %
 	cd pkg; zip -r ../rubber-tab.zip * > /dev/null
 	rm -r pkg
 
 open-fontello:
 	${CURL} -o .fontello --form config=@fontello/config.json ${FONTELLO_HOST}
-	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
+	${BROWSER} ${FONTELLO_HOST}/`cat .fontello`
 
 save-fontello:
 	@rm -rf .fontello.{src,zip}
