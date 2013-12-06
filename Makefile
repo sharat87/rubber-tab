@@ -1,3 +1,5 @@
+# Dependencies: npm install -g LiveScript stylus uglify-js
+
 SHELL = /bin/bash
 .PHONY: build build-styles build-scripts watch package open-fontello save-fontello
 
