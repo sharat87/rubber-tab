@@ -344,7 +344,7 @@ app.controller \TopSitesBar, ($scope, $interval, store) ->
   store $scope,
     showFavicons: yes
 
-  chrome.topSites.get (items) -> console.log($scope.items = items)
+  chrome.topSites.get (items) -> $scope.items = items
 
 app.controller \RedditBar, ($scope, $http, store) ->
   store $scope,
