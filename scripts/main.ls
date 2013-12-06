@@ -325,14 +325,14 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
       title: el.getElementsByTagName(\title)[0].textContent.trim()
       link: el.getElementsByTagName(\link)[0].textContent.trim()
 
-  loadFeed = ->
+  loadFeed = (url=$scope.feedUrl) ->
     $http do
       method: \GET
-      url: if '://' in $scope.feedUrl then $scope.feedUrl else "http://#{$scope.feedUrl}"
+      url: if url.indexOf(\://) > 0 then url else "http://#{url}"
       transformResponse: (data) ->
         new DOMParser().parseFromString data, \text/xml
     .success(updateNews).error (err) ->
-      console.log 'rss error:', $scope.feedUrl, err
+      console.log 'rss error:', url, err
 
   var time
   $scope.$watch \feedUrl, (value) ->
