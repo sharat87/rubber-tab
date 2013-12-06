@@ -1,13 +1,14 @@
 <!doctype html>
 <meta charset=utf-8>
 <title>New Tab</title>
-<link rel=stylesheet href=styles/master.css>
 <link rel=stylesheet href=fontello/all.css>
 <script src=vendor/angular.js></script>
 <script src=vendor/angular-animate.js></script>
 <script src=scripts/main.js></script>
 
 <body ng-csp ng-app=app ng-controller=AppCtrl ng-style='{fontFamily: fontFamily}'>
+
+<link rel=stylesheet ng-href='styles/{{theme}}.css'>
 
 <!-- This bar variable, declared in `ng-repeat` is used by the template
 directives and their controllers. -->
@@ -78,6 +79,13 @@ See http://stackoverflow.com/q/20193231/151048
   <label>
     <span>Font Family:</span>
     <input ng-model=fontFamily placeholder='Defaults to Open Sans'>
+  </label>
+  <label>
+    <span>Theme:</span>
+    <select ng-model=theme>
+      <option value=black-beauty>Black Beauty
+      <option value=white-knight>White Knight
+    </select>
   </label>
   <button class=reset-btn ng-click='reset()'>Reset!</button>
   <button class=close-btn ng-click='showPop = null'>Close</button>

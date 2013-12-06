@@ -13,13 +13,18 @@ ENTR = entr
 build: build-styles build-scripts
 
 build-styles:
-	${STYLUS} styles
+	@echo Building styles
+	@ls styles/themes | while read theme; do \
+		stylus --print --compress --import themes/$$theme styles/master.styl \
+			> styles/$${theme%\.*}.css; \
+	done
 
 build-scripts:
-	${LSC} --bare --compile --output scripts scripts/*.ls
+	@echo Compiling scripts
+	@${LSC} --bare --compile --output scripts scripts/*.ls
 
 watch:
-	ls styles/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
+	ls styles/**/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
 
 package: build
 	rm -f rubber-tab.zip

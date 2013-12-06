@@ -1,3 +1,7 @@
+bg-color ?= red
+fg-color ?= #222
+
+
 @font-face
   font-family open-sans
   src url(OpenSans-Light.ttf) format(truetype)
@@ -16,8 +20,8 @@
 body
   font 18px open-sans, sans-serif
   font-weight normal
-  background-color #444
-  color #FFF
+  background-color bg-color
+  color fg-color
   margin 0 0 58px
 
 b, h1, h2

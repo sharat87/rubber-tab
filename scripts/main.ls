@@ -82,6 +82,7 @@ app.value \registry,
 app.controller \AppCtrl, ($scope, $window, store, registry) ->
   store $scope, \options,
     fontFamily: ''
+    theme: \black-beauty
 
   $scope.nav = $window.navigator
   $scope.registry = registry
