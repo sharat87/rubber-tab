@@ -1,19 +1,27 @@
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');
-normal-weight = 300
-bold-weight = 400
+@font-face
+  font-family open-sans
+  src url(OpenSans-Light.ttf) format(truetype)
+  font-weight normal
+  font-style normal
+
+@font-face
+  font-family open-sans
+  src url(OpenSans-Regular.ttf) format(truetype)
+  font-weight bold
+  font-style normal
 
 *
   box-sizing border-box
 
 body
-  font 18px 'Open Sans', sans-serif
-  font-weight normal-weight
+  font 18px open-sans, sans-serif
+  font-weight normal
   background-color #444
   color #FFF
   margin 0 0 58px
 
 b, h1, h2
-  font-weight bold-weight
+  font-weight bold
 
 button
   font inherit
@@ -61,7 +69,7 @@ select
   padding 12px
   background-color rgba(0, 0, 0, .8)
   box-shadow 0 0 20px rgba(0, 0, 0, .8)
-  font-weight bold-weight
+  font-weight bold
   z-index 10
 
   label
@@ -104,7 +112,7 @@ select
     text-align center
     box-shadow 0 0 9px @background
     text-shadow 0 -1px 0 rgba(0, 0, 0, .5)
-    font-weight bold-weight
+    font-weight bold
 
     &:hover
       background #0A4
@@ -419,7 +427,7 @@ select
       white-space nowrap
 
     .header
-      font-weight bold-weight
+      font-weight bold
 
     a
       opacity .9
