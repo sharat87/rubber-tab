@@ -13,6 +13,12 @@ button()
     background-color @color
     color invert(@color)
 
+  &.reset-btn
+    &:hover, &:focus
+      background-color #F44
+      border-color #F44
+      box-shadow 0 0 6px #F44
+
 bar()
   background-color rgba(0, 0, 0, .06)
   &:hover
@@ -73,3 +79,10 @@ pop-slide()
   box-shadow 0 0 20px rgba(0, 0, 0, .1)
   a
     color blue
+
+donate-btn()
+  background #094
+  box-shadow 0 0 9px @background-color
+  color #CFE
+  &:hover
+    background #0A4

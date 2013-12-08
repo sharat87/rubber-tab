@@ -1,0 +1,108 @@
+base03 = #002b36
+base02 = #073642
+base01 = #586e75
+base00 = #657b83
+base0 = #839496
+base1 = #93a1a1
+base2 = #eee8d5
+base3 = #fdf6e3
+yellow = #b58900
+orange = #cb4b16
+red = #dc322f
+magenta = #d33682
+violet = #6c71c4
+blue = #268bd2
+cyan = #2aa198
+green = #859900
+
+bg-color = base3
+fg-color = base00
+
+button()
+  background-color base2
+  color base01
+  border thin solid @color
+  box-shadow 0 0 3px @color
+  border-radius 3px
+  padding 0 6px
+  font-weight bold
+
+  &:hover, &:focus
+    background-color base01
+    color base3
+
+  &.reset-btn
+    &:hover, &:focus
+      background-color red
+      border-color @background-color
+      box-shadow 0 0 6px @background-color
+
+bar()
+  &:hover
+    background-color base2
+    box-shadow 0 0 2px @background-color
+
+  b
+    color base01
+
+bar-icon()
+  background-color base2
+
+bar-icon-active()
+  background-color base1
+  color base3
+
+bar-prefs()
+  background-color base2
+  color base01
+  box-shadow 0 6px 24px @background-color
+
+app-ln()
+  border-radius 3px
+  background-color base2
+  &:hover
+    box-shadow 0 0 3px @background-color
+
+nav()
+  background-color base2
+  box-shadow 0 0 6px @background-color
+  a
+    color base00
+    &.active
+      background-color base1
+      color base2
+
+nav-edit-btn-active()
+  background-color blue
+  color base3
+  text-shadow 0 0 6px
+
+nav-offline-ind()
+  color orange
+
+tip()
+  background-color base0
+  box-shadow 0 1px 3px @background-color
+  color base3
+  font-weight bold
+
+menu()
+  background-color base0
+  box-shadow 0 3px 6px @background-color
+  color base3
+  font-weight bold
+  a
+    color base3
+  a:hover
+    background-color base01
+
+pop-slide()
+  background-color base2
+  box-shadow 0 0 20px @background-color
+  a
+    color blue
+
+donate-btn()
+  background-color green
+  box-shadow 0 0 9px @background-color
+  color base3
