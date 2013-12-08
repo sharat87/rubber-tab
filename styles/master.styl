@@ -1,6 +1,4 @@
-bg-color ?= red
-fg-color ?= #222
-
+// Uses variables from themes. Assumes imported from command line.
 
 @font-face
   font-family open-sans
@@ -30,17 +28,7 @@ b, h1, h2
 button
   font inherit
   cursor pointer
-  background-color transparent
-  color white
-  border thin solid white
-  border-radius 3px
-  box-shadow 0 0 3px white
-  padding 0 6px
-
-  &:hover
-    background-color white
-    color black
-    box-shadow none
+  button()
 
 a
   text-decoration none
@@ -71,17 +59,15 @@ select
   right 0
   width 420px
   padding 12px
-  background-color rgba(0, 0, 0, .8)
-  box-shadow 0 0 20px rgba(0, 0, 0, .8)
   font-weight bold
   z-index 10
+  pop-slide()
 
   label
     display block
 
   a
     text-decoration underline
-    color #BDF
 
   button
     display block
@@ -93,8 +79,6 @@ select
 
     &:hover, &:focus
       outline none
-      background-color #FFF
-      color #222
 
     &:active
       -webkit-transform translatey(1px)
@@ -126,14 +110,10 @@ select
 
 .bar
   margin 12px
-  background-color rgba(0, 0, 0, .2)
   border-radius 2px
   position relative
   font-size 1.4em
-
-  &:hover
-    background-color rgba(0, 0, 0, .3)
-    box-shadow 0 0 2px rgba(0, 0, 0, .2)
+  bar()
 
   [ng-controller]
     border-spacing 0
@@ -142,6 +122,7 @@ select
 
     a
       display inline-block
+      color inherit
 
     > span, > .content
       padding 0 12px
@@ -161,7 +142,7 @@ select
       white-space nowrap
 
       i:before
-        background-color rgba(0, 0, 0, .2)
+        bar-icon()
         width 52px
         line-height 52px
 
@@ -170,7 +151,7 @@ select
 
       a:hover, a.active
         i:before
-          background-color rgba(0, 0, 0, .6)
+          bar-icon-active()
 
     button
       font-size .8em
@@ -215,15 +196,14 @@ select
 
   .prefs
     position absolute
-    background rgba(0, 0, 0, .8)
     padding 6px 12px
     border-radius 0 0 3px 3px
-    box-shadow 0 6px 24px rgba(0, 0, 0, .7)
     min-height 120px
     top 100%
     right 0
     font-size .8em
     z-index 100
+    bar-prefs()
 
     > *
       display block
@@ -310,18 +290,13 @@ select
     text-decoration none
     display inline-block
     padding 0 10px
-    border-radius 3px
-    background-color rgba(0, 0, 0, .1)
     margin-right 12px
     // Need absolute font size here for the icons to line vertically center.
     font-size 24px
-
-    &:hover
-      background-color rgba(0, 0, 0, .6)
-      box-shadow 0 0 3px rgba(0, 0, 0, .9)
+    app-ln()
 
     &:active
-      -webkit-transform scale(.9)
+      -webkit-transform scale(.95)
 
     img
       vertical-align -webkit-baseline-middle
@@ -384,13 +359,12 @@ select
 
 .tip
   position absolute
-  background-color rgba(0, 0, 0, .8)
-  box-shadow 0 2px 6px rgba(0, 0, 0, .3)
   border-radius 2px 2px 2px 0
   display none
   padding 3px 6px
   white-space nowrap
   z-index 1030
+  tip()
 
 [menu-box]
   position relative
@@ -404,10 +378,8 @@ select
     padding 5px 0
     margin 2px 0 0
     list-style none
-    border 1px solid rgba(0, 0, 0, .15)
     border-radius 9px
-    box-shadow 0 6px 12px rgba(0, 0, 0, .2)
-    background-color rgba(0, 0, 0, .9)
+    menu()
 
     &.ne
       bottom 100%
@@ -441,7 +413,6 @@ select
         opacity .7
 
       &:hover
-        background-color #000
         text-decoration none
         opacity 1
 
@@ -465,9 +436,8 @@ nav
   bottom 0
   height 37px
   width 100%
-  background rgba(30, 30, 30, .9)
-  box-shadow 0 0 6px rgba(0, 0, 0, .3)
   z-index 20
+  nav()
 
   .left
     float left
@@ -478,21 +448,17 @@ nav
   a
     padding 6px 18px
     text-decoration none
-    opacity .4
     display inline-block
 
     &:hover, &:focus, &.active
       outline none
-      background rgba(0, 0, 0, .5)
-      opacity 1
 
     &.edit-btn.active
-      background-color #06D
-      text-shadow 0 0 6px
+      nav-edit-btn-active()
 
   .offline-ind
-    color #07F
     opacity 1
+    nav-offline-ind()
 
 .radio-bar
   display inline-block
@@ -504,13 +470,14 @@ nav
 
     + span
       cursor pointer
-      border thin solid #FFF
+      border thin solid invert(bg-color)
       padding 0 9px
 
     &:checked + span
       cursor default
-      background-color #FFF
-      color #000
+      background-color invert(bg-color)
+      color invert(fg-color)
+      font-weight bold
 
   label
     float left

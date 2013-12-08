@@ -1,2 +1,75 @@
 bg-color = white
 fg-color = #222
+
+button()
+  background-color transparent
+  color black
+  border thin solid @color
+  border-radius 3px
+  box-shadow 0 0 3px rgba(0, 0, 0, .3)
+  padding 0 6px
+
+  &:hover, &:focus
+    background-color @color
+    color invert(@color)
+
+bar()
+  background-color rgba(0, 0, 0, .06)
+  &:hover
+    background-color rgba(0, 0, 0, .1)
+    box-shadow 0 0 2px @background-color
+
+bar-icon()
+  background-color rgba(0, 0, 0, .1)
+  color #444
+
+bar-icon-active()
+  background-color rgba(0, 0, 0, .2)
+  color #111
+
+bar-prefs()
+  background linear-gradient(rgba(255, 255, 255, .95), rgba(240, 240, 240, .95))
+  box-shadow 0 6px 24px rgba(0, 0, 0, .2)
+
+app-ln()
+  border-radius 3px
+  background-color rgba(0, 0, 0, .05)
+  &:hover
+    background-color rgba(0, 0, 0, .15)
+    box-shadow 0 0 3px rgba(0, 0, 0, .1)
+
+nav()
+  background rgba(220, 220, 220, .9)
+  box-shadow 0 0 6px rgba(0, 0, 0, .1)
+  a
+    color #222
+    opacity .4
+    &:hover, &:focus, &.active
+      color black
+      opacity 1
+
+nav-edit-btn-active()
+  background-color rgb(0, 100, blue(bg-color))
+  text-shadow 0 0 6px
+  color white
+
+nav-offline-ind()
+  color #07F
+
+tip()
+  background-color rgba(230, 230, 230, .9)
+  box-shadow 0 2px 6px rgba(0, 0, 0, .3)
+
+menu()
+  box-shadow 0 6px 12px rgba(0, 0, 0, .1)
+  background-color rgba(230, 230, 230, .9)
+  a
+    color inherit
+  a:hover
+    background-color rgb(240, 240, 240)
+
+pop-slide()
+  background-color rgba(240, 240, 240, .9)
+  box-shadow 0 0 20px rgba(0, 0, 0, .1)
+  a
+    color blue
