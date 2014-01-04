@@ -61,14 +61,17 @@ See http://stackoverflow.com/q/20193231/151048
       <a><i class=i-bookmark></i></a>
       <ul class='menu nw'>
         <li class=header>Bookmarks</li>
-        <li ng-repeat='item in barMarks.children' ng-include='"bookmark-item.html"'></li>
+        <li ng-if=stack.length>
+          <a ng-click='openBack($event)'>&larr; Back</a>
+        </li>
+        <li ng-repeat='item in currentTree.children'>
+          <a ng-href='{{item.url}}' ng-click='openMark(item, $event)'>
+            {{item.title}}
+            <span ng-hide=item.url>&rarr;</span>
+          </a>
+        </li>
+        <li class=header ng-if=!currentTree.children.length>Nothing here!</li>
       </ul>
-      <script type=text/ng-template id=bookmark-item.html>
-        <a href='{{item.url}}'>{{item.title}}</a>
-        <ul ng-if=item.children>
-          <li ng-repeat='item in item.children' ng-include='"bookmark-item.html"'></li>
-        </ul>
-      </script>
     </span>
     <span menu-box>
       <a><i class=i-chrome></i></a>

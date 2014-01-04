@@ -458,8 +458,23 @@ $ng.module \rubber-app, <[ngAnimate]>
     localStorage.knownApps = $ng.toJson [app.id for app in $scope.apps]
 
 .controller \BookmarksCtrl, ($scope) ->
+
   chrome.bookmarks.getTree (tree) ->
-    [$scope.barMarks, $scope.otherMarks, $scope.mobileMarks] = tree[0].children
+    tree = tree[0].children
+    $scope.currentTree = tree[0]
+    $scope.currentTree.children.push tree[1]
+    $scope.currentTree.children.push tree[2]
+    $scope.stack = []
+
+  $scope.openMark = (item, event) ->
+    unless item.url
+      $scope.stack.push $scope.currentTree
+      $scope.currentTree = item
+      event.stopPropagation!
+
+  $scope.openBack = (event) ->
+    $scope.currentTree = $scope.stack.pop!
+    event.stopPropagation!
 
 .directive \tip, ->
 
