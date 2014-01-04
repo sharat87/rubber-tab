@@ -457,6 +457,10 @@ $ng.module \rubber-app, <[ngAnimate]>
     return unless len?
     localStorage.knownApps = $ng.toJson [app.id for app in $scope.apps]
 
+.controller \BookmarksCtrl, ($scope) ->
+  chrome.bookmarks.getTree (tree) ->
+    [$scope.barMarks, $scope.otherMarks, $scope.mobileMarks] = tree[0].children
+
 .directive \tip, ->
 
   restrict: \A
