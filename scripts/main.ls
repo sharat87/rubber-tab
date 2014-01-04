@@ -1,7 +1,7 @@
 $ng = angular
-app = $ng.module \app, <[ngAnimate]>
+$ng.module \rubber-app, <[ngAnimate]>
 
-app.run ->
+.run ->
   # Transition from the old way of saving bars to the new serialization method.
   return unless localStorage.bars and not localStorage.lastId
   bars = $ng.fromJson localStorage.bars
@@ -10,18 +10,18 @@ app.run ->
     bars = [{name, id: localStorage.lastId++} for name in bars]
     localStorage.bars = $ng.toJson bars
 
-app.config ($compileProvider) ->
+.config ($compileProvider) ->
   $compileProvider.imgSrcSanitizationWhitelist /^(https?|chrome):/
   $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome(-extension)?):/
 
-app.directive \href, ->
+.directive \href, ->
   # Fix anchor tags that link to chrome internal pages. Chrome stops them from
   # working for security reasons.
   (scope, element, attrs) ->
     if attrs.href.match /^chrome(-internal)?:/
       element.on \click, -> chrome.tabs.update url: attrs.href
 
-app.factory \store, ->
+.factory \store, ->
   # A caching/storage abstraction, based on localStorage
   (scope, ns, defaults) ->
     if arguments.length is 2
@@ -49,7 +49,7 @@ app.factory \store, ->
     scope.$watch build, save, yes
     scope.$on \$destroy, clear
 
-app.value \registry,
+.value \registry,
   # Registry holds bar types available and some metadata about them.
   datetime:
     title: 'Date and Time'
@@ -79,7 +79,7 @@ app.value \registry,
     title: 'Sub-reddit'
     icon: \reddit
 
-app.controller \AppCtrl, ($scope, $window, store, registry) ->
+.controller \AppCtrl, ($scope, $window, store, registry) ->
   store $scope, \options,
     fontFamily: ''
     theme: \black-beauty
@@ -121,7 +121,7 @@ app.controller \AppCtrl, ($scope, $window, store, registry) ->
       localStorage.clear()
       $window.location.reload()
 
-app.factory \placeQ, ($http, $q, $window) ->
+.factory \placeQ, ($http, $q, $window) ->
   defer = $q.defer()
 
   $window.navigator.geolocation.getCurrentPosition (pos) ->
@@ -144,14 +144,14 @@ app.factory \placeQ, ($http, $q, $window) ->
 
   defer.promise
 
-app.controller \BookmarkBar, ($scope, $interval) ->
+.controller \BookmarkBar, ($scope, $interval) ->
   chrome.bookmarks.getTree (tree) ->
     other = tree[0].children[1]
     mobile = tree[0].children[2]
     $scope.bar = tree[0].children[0]
     do $scope.$digest
 
-app.controller \TimeBar, ($scope, $interval, store) ->
+.controller \TimeBar, ($scope, $interval, store) ->
   store $scope,
     use24: no
 
@@ -187,7 +187,7 @@ app.controller \TimeBar, ($scope, $interval, store) ->
   do updateTime
   $interval updateTime, 1000
 
-app.controller \GMailBar, ($scope, $http, store) ->
+.controller \GMailBar, ($scope, $http, store) ->
   store $scope,
     unreads: null
 
@@ -201,7 +201,7 @@ app.controller \GMailBar, ($scope, $http, store) ->
   ).error (err) ->
     console.log 'gmail failure:', err
 
-app.controller \FacebookBar, ($scope, $http, store) ->
+.controller \FacebookBar, ($scope, $http, store) ->
   store $scope,
     inbox: null
     notifications: null
@@ -213,7 +213,7 @@ app.controller \FacebookBar, ($scope, $http, store) ->
   ).error (err) ->
     console.log 'facebook failure:', err
 
-app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
+.controller \WeatherBar, ($scope, $http, placeQ, store) ->
   # Thanks to HumbleNewTabPage for help with this.
   # Weather API: http://developer.yahoo.com/weather/
 
@@ -278,7 +278,7 @@ app.controller \WeatherBar, ($scope, $http, placeQ, store) ->
 
     placeQ.then (place) -> loadWeather place.woeid
 
-app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
+.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
   store $scope,
     items: null
     edition: null
@@ -313,7 +313,7 @@ app.controller \NewsBar, ($scope, $http, $interval, placeQ, store) ->
       $scope.edition = place.countrycode.toLowerCase()
       do loadNews
 
-app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
+.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
   store $scope,
     items: null
     feedUrl: null
@@ -341,13 +341,13 @@ app.controller \RssBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
     time := Date.now!
     $timeout ((t) -> (-> do loadFeed if t is time))(time), 800
 
-app.controller \TopSitesBar, ($scope, $interval, store) ->
+.controller \TopSitesBar, ($scope, $interval, store) ->
   store $scope,
     showFavicons: yes
 
   chrome.topSites.get (items) -> $scope.items = items
 
-app.controller \RedditBar, ($scope, $http, store) ->
+.controller \RedditBar, ($scope, $http, store) ->
   store $scope,
     unreads: null
 
@@ -360,7 +360,7 @@ app.controller \RedditBar, ($scope, $http, store) ->
   .error (err) ->
     console.log 'reddit failure:', err
 
-app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
+.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store) ->
   store $scope,
     items: null
     subr: null
@@ -389,7 +389,7 @@ app.controller \SubRedditBar, ($scope, $http, $interval, $timeout, placeQ, store
     time := Date.now!
     $timeout ((t) -> (-> do load if t is time))(time), 800
 
-app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
+.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
 
   build = (app) ->
@@ -457,7 +457,7 @@ app.controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
     return unless len?
     localStorage.knownApps = $ng.toJson [app.id for app in $scope.apps]
 
-app.directive \tip, ->
+.directive \tip, ->
 
   restrict: \A
   link: (scope, element, attrs) ->
@@ -479,7 +479,7 @@ app.directive \tip, ->
     attrs.$observe \tip, (value) ->
       tip.innerText = value
 
-app.directive \menuBox, ($document) ->
+.directive \menuBox, ($document) ->
   openedMenu = null
 
   close = ->
@@ -516,7 +516,7 @@ app.directive \menuBox, ($document) ->
       if child.tagName is \A
         child.addEventListener evt, handler
 
-app.directive \tick, ($interval) ->
+.directive \tick, ($interval) ->
   # Value of the ticker attribute, if any is the delay between each tick (in
   # ms). Defaults to 9000.
   restrict: \A
@@ -561,7 +561,7 @@ app.directive \tick, ($interval) ->
         else
           hide child
 
-app.directive \leftBtns, (registry) ->
+.directive \leftBtns, (registry) ->
   restrict: \E
   templateUrl: \left-btns.html
   replace: yes
@@ -571,7 +571,7 @@ app.directive \leftBtns, (registry) ->
     scope.moveUp = -> scope.$parent.moveUp scope.$parent.bar
     scope.moveDown = -> scope.$parent.moveDown scope.$parent.bar
 
-app.directive \rightBtns, ->
+.directive \rightBtns, ->
   restrict: \E
   templateUrl: \right-btns.html
   replace: yes
@@ -586,7 +586,7 @@ app.directive \rightBtns, ->
     scope.toggleExpand = ->
       scope.$parent.expanded = not scope.$parent.expanded
 
-app.directive \btns, ->
+.directive \btns, ->
   # Remove all immediate children that are text nodes. This is used on icon
   # buttons in the bar where the newline used in the html markup is coming up as
   # a small gap between the buttons. The only solution I found is to remove
