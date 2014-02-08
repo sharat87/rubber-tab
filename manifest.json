@@ -1,6 +1,6 @@
 {
     "name": "Rubber New Tab",
-    "version": "0.4.1",
+    "version": "0.5",
     "description": "A rubbery simple start page inspired by Knew Tab and Humble New Tab Page",
     "homepage_url": "https://github.com/sharat87/rubber-tab",
     "icons": {"128": "icons/icon-128.png", "48": "icons/icon-48.png"},
