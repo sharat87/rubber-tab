@@ -338,16 +338,17 @@ select
       img
         -webkit-filter grayscale(100%) brightness(60%)
 
-  &.offline .noOffline
+  &.offline .app-ln.noOffline
     -webkit-filter grayscale(100%)
     -webkit-transform scale(.8)
+    background-color transparent
 
     &:after
       right 3px
 
     &:hover
-      background-color rgba(0, 0, 0, .3)
-      box-shadow 0 0 3px rgba(0, 0, 0, .3)
+      background-color transparent
+      box-shadow none
 
 .tip
   position absolute
