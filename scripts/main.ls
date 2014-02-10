@@ -392,7 +392,7 @@ $ng.module \rubber-app, <[ngAnimate]>
 .controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
 
-  build! = (app) ->
+  build = (app) ->
     if app.type in <[extension theme]>
       return null
 
@@ -421,7 +421,7 @@ $ng.module \rubber-app, <[ngAnimate]>
   chrome.management.getAll (allExts) ->
 
     apps = for app in allExts
-      app if build! app
+      app if build app
 
     $scope.$apply ->
       $scope.apps = apps
