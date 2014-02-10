@@ -39,7 +39,7 @@ a
     text-decoration underline
 
 input[type=text], input:not([type])
-  border thin solid rgba(0, 0, 0, .8)
+  border thin solid fg-color
   border-radius 1px
   padding 3px
   font inherit
@@ -48,7 +48,8 @@ input[type=text], input:not([type])
   background-color rgba(bg-color, .2)
 
   &:focus
-    border-color rgba(255, 255, 255, .4)
+    box-shadow 0 0 3px 2px fg-color
+    outline none
 
 select
   vertical-align middle
