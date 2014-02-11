@@ -21,6 +21,22 @@ $ng.module \rubber-app, <[ngAnimate]>
     if attrs.href.match /^chrome(-internal)?:/
       element.on \click, -> chrome.tabs.update url: attrs.href
 
+.directive \cleanTextNodes, ->
+  # Removes text nodes that only contain whitespace, recursively. This is
+  # currently used in the nav button-bars to remove the small text-like spacing
+  # that appears between the buttons, because of the newlines and indentation in
+  # the html source.
+
+  clean = (el) !->
+    for child in Array.prototype.slice.call(el.child-nodes, 0)
+      if child.node-type is Node.TEXT_NODE and not /\S/.test(child.node-value)
+        child.remove!
+      else if child.node-type is Node.ELEMENT_NODE
+        clean child
+
+  (scope, element, attrs) !->
+    clean element[0]
+
 .factory \store, ->
   # A caching/storage abstraction, based on localStorage
   (scope, ns, defaults) ->

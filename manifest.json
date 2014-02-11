@@ -5,7 +5,8 @@
     "homepage_url": "https://github.com/sharat87/rubber-tab",
     "icons": {"128": "icons/icon-128.png", "48": "icons/icon-48.png"},
     "chrome_url_overrides": {"newtab": "index.html"},
+    "background": {"scripts": ["scripts/background.js"]},
     "offline_enabled": true,
-    "permissions": ["management", "bookmarks", "geolocation", "topSites", "<all_urls>"],
+    "permissions": ["management", "bookmarks", "geolocation", "topSites", "tabs", "<all_urls>"],
     "manifest_version": 2
 }

@@ -40,7 +40,7 @@ See http://stackoverflow.com/q/20193231/151048
 </div>
 
 <nav>
-  <section class=left>
+  <section class=left clean-text-nodes>
     <a tip='Reorder/Configure bars' ng-click='editMode = !editMode'
       ng-class='{active: editMode}' class=edit-btn><i class=i-edit></i></a>
     <span menu-box>
@@ -54,7 +54,7 @@ See http://stackoverflow.com/q/20193231/151048
       </ul>
     </span>
   </section>
-  <section class=right>
+  <section class=right  clean-text-nodes>
     <a tip='You are offline' ng-hide=nav.onLine class=offline-ind>
       <i class=i-flash></i></a>
     <span menu-box ng-controller=BookmarksCtrl>
