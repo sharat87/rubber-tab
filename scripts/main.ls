@@ -15,10 +15,14 @@ $ng.module \rubber-app, <[ngAnimate]>
   $compileProvider.aHrefSanitizationWhitelist /^(https?|chrome(-extension)?):/
 
 .directive \href, ->
-  # Fix anchor tags that link to chrome internal pages. Chrome stops them from
-  # working for security reasons.
   (scope, element, attrs) ->
-    if attrs.href.match /^chrome(-internal)?:/
+    if attrs.href is \newtab
+      element.on \click, (e) ->
+        alert 'Opening to the native new tab cannot currently be done. Please ' +
+          'see this chrome bug for more details: ' +
+          'https://code.google.com/p/chromium/issues/detail?id=336304'
+        e.prevent-default!
+    else if attrs.href.match /^chrome:/
       element.on \click, -> chrome.tabs.update url: attrs.href
 
 .directive \cleanTextNodes, ->
