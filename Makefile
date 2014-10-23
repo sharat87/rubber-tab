@@ -21,10 +21,10 @@ build-styles:
 
 build-scripts:
 	@echo Compiling scripts
-	@${LSC} --bare --compile --output scripts scripts/*.ls
+	@${LSC} --bare --compile `find -name '*.ls'`
 
 watch:
-	ls styles/*.styl styles/themes/*.styl scripts/*.ls | ${ENTR} -r ${MAKE} build
+	find -name '*.styl' -or -name '*.ls' | ${ENTR} -r ${MAKE} build
 
 package: build
 	rm -f rubber-tab.zip
