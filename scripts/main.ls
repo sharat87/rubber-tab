@@ -100,7 +100,8 @@ $ng.module \rubber-app, <[ngAnimate]>
     icon: \reddit
   feedly:
     title: 'Feedly counts'
-    icon: \reddit
+    # Icon taken from https://en.wikipedia.org/wiki/File:Feedly_Logo.svg
+    icon: \feedly_logo
 
 .controller \AppCtrl, ($scope, $window, store, registry) ->
   store $scope, \options,
