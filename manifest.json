@@ -6,6 +6,6 @@
     "icons": {"128": "icons/icon-128.png", "48": "icons/icon-48.png"},
     "chrome_url_overrides": {"newtab": "index.html"},
     "offline_enabled": true,
-    "permissions": ["management", "bookmarks", "geolocation", "topSites", "tabs", "<all_urls>"],
+    "permissions": ["management", "bookmarks", "geolocation", "topSites", "tabs", "cookies", "<all_urls>"],
     "manifest_version": 2
 }

@@ -98,6 +98,9 @@ $ng.module \rubber-app, <[ngAnimate]>
   subreddit:
     title: 'Sub-reddit'
     icon: \reddit
+  feedly:
+    title: 'Feedly counts'
+    icon: \reddit
 
 .controller \AppCtrl, ($scope, $window, store, registry) ->
   store $scope, \options,
@@ -408,6 +411,29 @@ $ng.module \rubber-app, <[ngAnimate]>
     return unless value
     time := Date.now!
     $timeout ((t) -> (-> do load if t is time))(time), 800
+
+.controller \FeedlyBar, ($scope, $http, store) ->
+  store $scope,
+    unreads: null
+
+  chrome.cookies.get {url: 'https://feedly.com', name: \session@cloud}, (cookie) ->
+    if not cookie
+      console.error 'Cannot find feedly token cookie'
+
+    token = $ng.fromJson(cookie.value).feedlyToken
+
+    $http do
+      method: \GET
+      url: 'https://feedly.com/v3/markers/counts'
+      headers: {Authorization: token}
+      transformResponse: (data) -> $ng.fromJson(data).unreadcounts
+    .success (counts) ->
+      for cnt in counts
+        if cnt.id.match /\/global\.all$/
+          $scope.unreads = cnt.count
+          break
+    .error (err) ->
+      console.log 'feedly error:', err
 
 .controller \AppsListCtrl, ($scope, $timeout, $window, $location) ->
   knownApps = $ng.fromJson(localStorage.knownApps) or []
