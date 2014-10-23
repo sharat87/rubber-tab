@@ -15,7 +15,7 @@ build: build-styles build-scripts
 build-styles:
 	@echo Building styles
 	@ls styles/themes | while read theme; do \
-		stylus --print --compress --import themes/$$theme styles/master.styl \
+		${STYLUS} --print --compress --import themes/$$theme styles/master.styl \
 			> styles/$${theme%\.*}.css; \
 	done
 
